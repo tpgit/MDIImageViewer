@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file alias="icon.png">images/icon.png</file>
+    <file alias="exit.png">images/exit.png</file>
+    <file alias="help.png">images/handbook.png</file>
+    <file alias="new.png">images/new.png</file>
+    <file alias="open.png">images/open.png</file>
+    <file alias="qt.png">images/qt.png</file>
+    <file alias="zoomin.png">images/zoomin.png</file>
+    <file alias="zoomout.png">images/zoomout.png</file>
+</qresource>
+</RCC>

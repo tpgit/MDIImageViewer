@@ -1,0 +1,7 @@
+.hg/
+sphinx/_build/
+sphinx/githtml/
+*~
+*.pyc
+*.orig
+*.wpr

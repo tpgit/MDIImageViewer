@@ -1,0 +1,7 @@
+.git/
+sphinx/_build/
+sphinx/githtml/
+~$
+\.pyc$
+\.orig$
+\.wpr$
