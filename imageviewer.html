@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1 imageviewer – Image viewer with panning and zooming &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="index.html" />
+    <link rel="next" title="2 mdiimageviewer – Synchable image viewers using MDI style interface" href="mdiimageviewer.html" />
+    <link rel="prev" title="Welcome to PyQt MDI Image Viewer’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mdiimageviewer.html" title="2 mdiimageviewer – Synchable image viewers using MDI style interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PyQt MDI Image Viewer’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyQt MDI Image Viewer v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to PyQt MDI Image Viewer&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mdiimageviewer.html"
+                        title="next chapter">2  mdiimageviewer &#8211; Synchable image viewers using MDI style interface</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/imageviewer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="imageviewer-image-viewer-with-panning-and-zooming">
+<h1>1  imageviewer &#8211; Image viewer with panning and zooming<a class="headerlink" href="#imageviewer-image-viewer-with-panning-and-zooming" title="Permalink to this headline">¶</a></h1>
+<p class="graphviz">
+<img src="_images/inheritance-2477e033a311c6100d5e0e4914e0b8eb555daec7.png" alt="Inheritance diagram of mdiimageviewer" usemap="#inheritance116636fe75" class="inheritance"/>
+<map id="inheritance116636fe75" name="inheritance116636fe75">
+<area shape="rect" id="node17" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow" title="mdiimageviewer.MDIImageViewerWindow" alt="" coords="5,379,264,405"/>
+<area shape="rect" id="node7" href="#imageviewer.ImageViewer" title="imageviewer.ImageViewer" alt="" coords="288,379,456,405"/>
+<area shape="rect" id="node19" href="mdiimageviewer.html#mdiimageviewer.MdiChild" title="mdiimageviewer.MdiChild" alt="" coords="289,453,455,480"/>
+</map>
+</p>
+<span class="target" id="module-imageviewer"></span><p>ImageViewer class</p>
+<dl class="class">
+<dt id="imageviewer.SynchableGraphicsView">
+<em class="property">class </em><tt class="descclassname">imageviewer.</tt><tt class="descname">SynchableGraphicsView</tt><big>(</big><em>scene=None</em>, <em>parent=None</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QGraphicsView</span></tt></p>
+<p>QGraphicsView that synchronizes zooming &amp; panning of multiple instances.</p>
+<p>Also adds support for various scrolling operations and mouse wheel
+zooming.</p>
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.connectSbarSignals">
+<tt class="descname">connectSbarSignals</tt><big>(</big><em>slot</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.connectSbarSignals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.connectSbarSignals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to scrollbar changed signals to synchronize panning.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.disconnectSbarSignals">
+<tt class="descname">disconnectSbarSignals</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.disconnectSbarSignals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.disconnectSbarSignals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect from scrollbar changed signals.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.SynchableGraphicsView.handDragging">
+<tt class="descname">handDragging</tt><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.handDragging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.handDragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get hand dragging state.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.SynchableGraphicsView.scrollState">
+<tt class="descname">scrollState</tt><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.scrollState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.scrollState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll state as tuple of percentage of scene extents.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.SynchableGraphicsView.zoomFactor">
+<tt class="descname">zoomFactor</tt><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.zoomFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.zoomFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Zoom scale factor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.wheelEvent">
+<tt class="descname">wheelEvent</tt><big>(</big><em>wheelEvent</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.wheelEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the wheelEvent to handle zooming.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.keyReleaseEvent">
+<tt class="descname">keyReleaseEvent</tt><big>(</big><em>keyEvent</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.keyReleaseEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides to make sure key release passed on to other classes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.checkTransformChanged">
+<tt class="descname">checkTransformChanged</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.checkTransformChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.checkTransformChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if view transform has changed.</p>
+<p>Overkill. For current implementation really only need to check
+if m11() has changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.clearTransformChanges">
+<tt class="descname">clearTransformChanges</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.clearTransformChanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.clearTransformChanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset view transform changed info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.scrollToTop">
+<tt class="descname">scrollToTop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.scrollToTop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.scrollToTop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll view to top.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.scrollToBottom">
+<tt class="descname">scrollToBottom</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.scrollToBottom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.scrollToBottom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll view to bottom.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.scrollToBegin">
+<tt class="descname">scrollToBegin</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.scrollToBegin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.scrollToBegin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll view to left edge.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.scrollToEnd">
+<tt class="descname">scrollToEnd</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.scrollToEnd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.scrollToEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll view to right edge.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.centerView">
+<tt class="descname">centerView</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.centerView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.centerView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Center view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.enableScrollBars">
+<tt class="descname">enableScrollBars</tt><big>(</big><em>enable</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.enableScrollBars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.enableScrollBars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set visiblility of the view&#8217;s scrollbars.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.enableHandDrag">
+<tt class="descname">enableHandDrag</tt><big>(</big><em>enable</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.enableHandDrag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.enableHandDrag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether dragging the view with the hand cursor is allowed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.SynchableGraphicsView.dumpTransform">
+<tt class="descname">dumpTransform</tt><big>(</big><em>t</em>, <em>padding=u''</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#SynchableGraphicsView.dumpTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.SynchableGraphicsView.dumpTransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump the transform t to stdout.</p>
+<p>Each line is preceded by padding.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="imageviewer.ImageViewer">
+<em class="property">class </em><tt class="descclassname">imageviewer.</tt><tt class="descname">ImageViewer</tt><big>(</big><em>pixmap=None</em>, <em>name=None</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QFrame</span></tt></p>
+<p>Zooms &amp; Pans images (pixmaps).</p>
+<dl class="method">
+<dt id="imageviewer.ImageViewer.connectSbarSignals">
+<tt class="descname">connectSbarSignals</tt><big>(</big><em>slot</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.connectSbarSignals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.connectSbarSignals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to scrollbar changed signals.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.pixmap">
+<tt class="descname">pixmap</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.pixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.pixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the pixmap currently viewed in ImageViewer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.handDragging">
+<tt class="descname">handDragging</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.handDragging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.handDragging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get hand dragging state.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.scrollState">
+<tt class="descname">scrollState</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.scrollState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.scrollState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll state as tuple of percentage of ranges.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.zoomFactor">
+<tt class="descname">zoomFactor</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.zoomFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.zoomFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Zoom scale factor.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.horizontalScrollBar">
+<tt class="descname">horizontalScrollBar</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.horizontalScrollBar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.horizontalScrollBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ImageViewer horizontal scrollbar widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.verticalScrollBar">
+<tt class="descname">verticalScrollBar</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.verticalScrollBar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.verticalScrollBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ImageViewer vertical scrollbar widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="imageviewer.ImageViewer.sceneRect">
+<tt class="descname">sceneRect</tt><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.sceneRect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.sceneRect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ImageViewer sceneRect.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.scrollToTop">
+<tt class="descname">scrollToTop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.scrollToTop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.scrollToTop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll to top of image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.scrollToBottom">
+<tt class="descname">scrollToBottom</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.scrollToBottom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.scrollToBottom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll to bottom of image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.scrollToBegin">
+<tt class="descname">scrollToBegin</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.scrollToBegin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.scrollToBegin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll to left side of image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.scrollToEnd">
+<tt class="descname">scrollToEnd</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.scrollToEnd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.scrollToEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scroll to right side of image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.centerView">
+<tt class="descname">centerView</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.centerView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.centerView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Center image in view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.enableScrollBars">
+<tt class="descname">enableScrollBars</tt><big>(</big><em>enable</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.enableScrollBars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.enableScrollBars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set visibility of the view&#8217;s scrollbars to enable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.enableHandDrag">
+<tt class="descname">enableHandDrag</tt><big>(</big><em>enable</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.enableHandDrag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.enableHandDrag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether dragging the view with the hand cursor is allowed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.zoomIn">
+<tt class="descname">zoomIn</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.zoomIn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.zoomIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Zoom in on image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.zoomOut">
+<tt class="descname">zoomOut</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.zoomOut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.zoomOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Zoom out on image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.actualSize">
+<tt class="descname">actualSize</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.actualSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.actualSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change zoom to show image at actual size.</p>
+<p>(image pixel is equal to screen pixel)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.fitToWindow">
+<tt class="descname">fitToWindow</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.fitToWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.fitToWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit image within view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.fitWidth">
+<tt class="descname">fitWidth</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.fitWidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.fitWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit image width to view width.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.fitHeight">
+<tt class="descname">fitHeight</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.fitHeight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.fitHeight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit image height to view height.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.handleWheelNotches">
+<tt class="descname">handleWheelNotches</tt><big>(</big><em>notches</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.handleWheelNotches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.handleWheelNotches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle wheel notch event from underlying QGraphicsView.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.closeEvent">
+<tt class="descname">closeEvent</tt><big>(</big><em>event</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.closeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect scrollbar signals before closing.</p>
+<p>If this isn&#8217;t done Python crashes!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.setPixmap">
+<tt class="descname">setPixmap</tt><big>(</big><em>pixmap</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.setPixmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.setPixmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set pixmap associated with ImageViewer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.setName">
+<tt class="descname">setName</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.setName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set name of view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.scaleImage">
+<tt class="descname">scaleImage</tt><big>(</big><em>factor</em>, <em>combine=True</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.scaleImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.scaleImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale image by factor.</p>
+<p>If combine is True scales the current zoomFactor by factor.
+Otherwise just sets zoomFactor to factor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.ImageViewer.dumpTransform">
+<tt class="descname">dumpTransform</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#ImageViewer.dumpTransform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.ImageViewer.dumpTransform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump view transform to stdout.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="imageviewer.MainWindow">
+<em class="property">class </em><tt class="descclassname">imageviewer.</tt><tt class="descname">MainWindow</tt><big>(</big><em>pixmap</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PyQt4.QtGui.QMainWindow</span></tt></p>
+<p>Sample app to test the ImageViewer class.</p>
+<dl class="method">
+<dt id="imageviewer.MainWindow.createActions">
+<tt class="descname">createActions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.createActions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.createActions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create actions for the menus.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.createMenus">
+<tt class="descname">createMenus</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.createMenus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.createMenus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the menus.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.sceneChanged">
+<tt class="descname">sceneChanged</tt><big>(</big><em>rects</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.sceneChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.sceneChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggered when the underlying graphics scene has changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.transformChanged">
+<tt class="descname">transformChanged</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.transformChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.transformChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggered when the underlying view has been scaled, translated,
+or rotated.</p>
+<p>In practice, only scaling occurs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.scrollChanged">
+<tt class="descname">scrollChanged</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.scrollChanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.scrollChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Triggered when the views scrollbars have changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.keyPressEvent">
+<tt class="descname">keyPressEvent</tt><big>(</big><em>keyEvent</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.keyPressEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides to enable panning while dragging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.keyReleaseEvent">
+<tt class="descname">keyReleaseEvent</tt><big>(</big><em>keyEvent</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.keyReleaseEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.keyReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides to disable panning while dragging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.closeEvent">
+<tt class="descname">closeEvent</tt><big>(</big><em>event</em><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.closeEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle close action.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.writeSettings">
+<tt class="descname">writeSettings</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.writeSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.writeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write application settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="imageviewer.MainWindow.readSettings">
+<tt class="descname">readSettings</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#MainWindow.readSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.MainWindow.readSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read application settings.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="imageviewer.main">
+<tt class="descclassname">imageviewer.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/imageviewer.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imageviewer.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test app to run from command line.</p>
+<p><strong>Usage</strong>:</p>
+<div class="highlight-python"><pre>python26 imageviewer.py imagefilename</pre>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mdiimageviewer.html" title="2 mdiimageviewer – Synchable image viewers using MDI style interface"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PyQt MDI Image Viewer’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">PyQt MDI Image Viewer v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>
