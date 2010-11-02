@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 # $RCSfile: imageviewer.py,v $ $Revision: 527a78cd8251 $ $Date: 2010/10/18 20:47:58 $
 
-"""ImageViewer class
+"""
+This module contains the following classes:
+
++ :class:`SynchableGraphicsView`
++ :class:`ImageViewer`
++ :class:`MainWindow`
 
 """
 
@@ -33,12 +38,17 @@ from PyQt4 import (QtCore, QtGui)
 # ====================================================================
 
 class SynchableGraphicsView(QtGui.QGraphicsView):
-    """QGraphicsView that synchronizes zooming & panning of multiple instances.
+    """|QGraphicsView| that can synchronize panning & zooming of multiple
+    instances.
 
     Also adds support for various scrolling operations and mouse wheel
     zooming."""
 
     def __init__(self, scene=None, parent=None):
+        """:param scene: initial |QGraphicsScene|
+        :type scene: QGraphicsScene or None
+        :param QWidget: parent widget
+        :type QWidget: QWidget or None"""
         if scene:
             super(SynchableGraphicsView, self).__init__(scene, parent)
         else:
@@ -51,12 +61,28 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
     # ------------------------------------------------------------------
 
     #Signals
-    transformChanged = QtCore.pyqtSignal()
-    scrollChanged = QtCore.pyqtSignal()
-    wheelNotches = QtCore.pyqtSignal(float)
 
+    transformChanged = QtCore.pyqtSignal()
+    """Transformed Changed **Signal**.
+
+    Emitted whenever the |QGraphicsView| Transform matrix has been
+    changed."""
+    
+    scrollChanged = QtCore.pyqtSignal()
+    """Scroll Changed **Signal**.
+
+    Emitted whenever the scrollbar position or range has changed."""
+    
+    wheelNotches = QtCore.pyqtSignal(float)
+    """Wheel Notches **Signal** (*float*).
+
+    Emitted whenever the mouse wheel has been rolled. A wheelnotch is
+    equal to wheel delta / 240"""
+    
     def connectSbarSignals(self, slot):
-        """Connect to scrollbar changed signals to synchronize panning."""
+        """Connect to scrollbar changed signals to synchronize panning.
+
+        :param slot: slot to connect scrollbar signals to."""
         sbar = self.horizontalScrollBar()
         sbar.valueChanged.connect(slot, type=QtCore.Qt.UniqueConnection)
         #sbar.sliderMoved.connect(slot, type=QtCore.Qt.UniqueConnection)
@@ -85,12 +111,13 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
 
     @property
     def handDragging(self):
-        """Get hand dragging state."""
+        """Hand dragging state (*bool*)"""
         return self._handDrag
 
     @property
     def scrollState(self):
-        """Scroll state as tuple of percentage of scene extents."""
+        """Tuple of percentage of scene extents
+        *(sceneWidthPercent, sceneHeightPercent)*"""
         centerPoint = self.mapToScene(self.viewport().width()/2,
                                       self.viewport().height()/2)
         sceneRect = self.sceneRect()
@@ -114,7 +141,7 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
 
     @property
     def zoomFactor(self):
-        """Zoom scale factor."""
+        """Zoom scale factor (*float*)."""
         return self.transform().m11()
 
     @zoomFactor.setter
@@ -125,7 +152,9 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
     # ------------------------------------------------------------------
 
     def wheelEvent(self, wheelEvent):
-        """Overrides the wheelEvent to handle zooming."""
+        """Overrides the wheelEvent to handle zooming.
+
+        :param QWheelEvent wheelEvent: instance of |QWheelEvent|"""
         assert isinstance(wheelEvent, QtGui.QWheelEvent)
         if wheelEvent.modifiers() & QtCore.Qt.ControlModifier:
             self.wheelNotches.emit(wheelEvent.delta() / 240.0)
@@ -134,7 +163,9 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
             super(SynchableGraphicsView, self).wheelEvent(wheelEvent)
 
     def keyReleaseEvent(self, keyEvent):
-        """Overrides to make sure key release passed on to other classes."""
+        """Overrides to make sure key release passed on to other classes.
+
+        :param QKeyEvent keyEvent: instance of |QKeyEvent|"""
         assert isinstance(keyEvent, QtGui.QKeyEvent)
         #print("graphicsView keyRelease count=%d, autoRepeat=%s" %
               #(keyEvent.count(), keyEvent.isAutoRepeat()))
@@ -147,7 +178,9 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
         """Return True if view transform has changed.
 
         Overkill. For current implementation really only need to check
-        if m11() has changed."""
+        if ``m11()`` has changed.
+
+        :rtype: bool"""
         delta = 0.001
         result = False
 
@@ -211,7 +244,9 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
         sbar.setValue((sbar.maximum() + sbar.minimum())/2)
 
     def enableScrollBars(self, enable):
-        """Set visiblility of the view's scrollbars."""
+        """Set visiblility of the view's scrollbars.
+
+        :param bool enable: True to enable the scrollbars """
         if enable:
             self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
             self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
@@ -220,7 +255,9 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
             self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
 
     def enableHandDrag(self, enable):
-        """Set whether dragging the view with the hand cursor is allowed."""
+        """Set whether dragging the view with the hand cursor is allowed.
+
+        :param bool enable: True to enable hand dragging """
         if enable:
             if not self._handDrag:
                 self._handDrag = True
@@ -235,16 +272,21 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
     def dumpTransform(self, t, padding=""):
         """Dump the transform t to stdout.
 
-        Each line is preceded by padding."""
+        :param t: the transform to dump
+        :param str padding: each line is preceded by padding"""
         print("%s%5.3f %5.3f %5.3f" % (padding, t.m11(), t.m12(), t.m13()))
         print("%s%5.3f %5.3f %5.3f" % (padding, t.m21(), t.m22(), t.m23()))
         print("%s%5.3f %5.3f %5.3f" % (padding, t.m31(), t.m32(), t.m33()))
 
 
 class ImageViewer(QtGui.QFrame):
-    """Zooms & Pans images (pixmaps)."""
+    """Image Viewer than can pan & zoom images (|QPixmap|\ s)."""
 
     def __init__(self, pixmap=None, name=None):
+        """:param pixmap: |QPixmap| to display
+        :type pixmap: |QPixmap| or None
+        :param name: name associated with this ImageViewer
+        :type name: str or None"""
         super(ImageViewer, self).__init__()
         #self.setFrameStyle(QtGui.QFrame.Sunken | QtGui.QFrame.StyledPanel)
         self.setFrameStyle(QtGui.QFrame.NoFrame)
@@ -282,7 +324,7 @@ class ImageViewer(QtGui.QFrame):
 
         self._pixmapItem = QtGui.QGraphicsPixmapItem(scene=self._scene)
         if pixmap:
-            self.setPixmap(pixmap)
+            self.pixmap = pixmap
 
         rect = self._scene.addRect(QtCore.QRectF(0, 0, 100, 100),
                                    QtGui.QPen(QtGui.QColor("red")))
@@ -297,7 +339,7 @@ class ImageViewer(QtGui.QFrame):
         self._label.setFrameStyle(QtGui.QFrame.Panel)
         self._label.setAutoFillBackground(True);
         self._label.setBackgroundRole(QtGui.QPalette.ToolTipBase)
-        self.setName(name)
+        self.viewName = name
 
         layout.addWidget(self._view, 0, 0)
         layout.addWidget(self._label, 0, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
@@ -309,11 +351,24 @@ class ImageViewer(QtGui.QFrame):
     # ------------------------------------------------------------------
 
     sceneChanged = QtCore.pyqtSignal('QList<QRectF>')
+    """Scene Changed **Signal**.
+
+    Emitted whenever the |QGraphicsScene| content changes."""
+    
     transformChanged = QtCore.pyqtSignal()
+    """Transformed Changed **Signal**.
+
+    Emitted whenever the |QGraphicsView| Transform matrix has been changed."""
+
     scrollChanged = QtCore.pyqtSignal()
+    """Scroll Changed **Signal**.
+
+    Emitted whenever the scrollbar position or range has changed."""
 
     def connectSbarSignals(self, slot):
-        """Connect to scrollbar changed signals."""
+        """Connect to scrollbar changed signals.
+
+        :param slot: slot to connect scrollbar signals to."""
         self._view.connectSbarSignals(slot)
 
     def disconnectSbarSignals(self):
@@ -323,17 +378,41 @@ class ImageViewer(QtGui.QFrame):
 
     @property
     def pixmap(self):
-        """Get the pixmap currently viewed in ImageViewer."""
+        """The currently viewed |QPixmap| (*QPixmap*)."""
         return self._pixmapItem.pixmap()
+
+    @pixmap.setter
+    def pixmap(self, pixmap):
+        assert isinstance(pixmap, QtGui.QPixmap)
+        self._pixmapItem.setPixmap(pixmap)
+        self._pixmapItem.setOffset(-pixmap.width()/2.0, -pixmap.height()/2.0)
+        self._pixmapItem.setTransformationMode(QtCore.Qt.SmoothTransformation)
+        self.fitToWindow()
+
+    @property
+    def viewName(self):
+        """The name associated with ImageViewer (*str*)."""
+        return self._name
+    
+    @viewName.setter
+    def viewName(self, name):
+        if name:
+            self._label.setText("<b>%s</b>" % name)
+            self._label.show()
+        else:
+            self._label.setText("")
+            self._label.hide()
+        self._name = name
 
     @property
     def handDragging(self):
-        """Get hand dragging state."""
+        """Hand dragging state (*bool*)"""
         return self._view.handDragging
 
     @property
     def scrollState(self):
-        """Scroll state as tuple of percentage of ranges."""
+        """Tuple of percentage of scene extents
+        *(sceneWidthPercent, sceneHeightPercent)*"""
         return self._view.scrollState
 
     @scrollState.setter
@@ -342,7 +421,7 @@ class ImageViewer(QtGui.QFrame):
 
     @property
     def zoomFactor(self):
-        """Zoom scale factor."""
+        """Zoom scale factor (*float*)."""
         return self._view.zoomFactor
 
     @zoomFactor.setter
@@ -354,18 +433,24 @@ class ImageViewer(QtGui.QFrame):
         self._view.zoomFactor = newZoomFactor
 
     @property
-    def horizontalScrollBar(self):
-        """Get the ImageViewer horizontal scrollbar widget."""
+    def _horizontalScrollBar(self):
+        """Get the ImageViewer horizontal scrollbar widget (*QScrollBar*).
+
+        (Only used for debugging purposes)"""
         return self._view.horizontalScrollBar()
 
     @property
-    def verticalScrollBar(self):
-        """Get the ImageViewer vertical scrollbar widget."""
+    def _verticalScrollBar(self):
+        """Get the ImageViewer vertical scrollbar widget (*QScrollBar*).
+
+        (Only used for debugging purposes)"""
         return self._view.verticalScrollBar()
 
     @property
-    def sceneRect(self):
-        """Get the ImageViewer sceneRect."""
+    def _sceneRect(self):
+        """Get the ImageViewer sceneRect (*QRectF*).
+
+        (Only used for debugging purposes)"""
         return self._view.sceneRect()
 
     # ------------------------------------------------------------------
@@ -397,12 +482,16 @@ class ImageViewer(QtGui.QFrame):
 
     @QtCore.pyqtSlot(bool)
     def enableScrollBars(self, enable):
-        """Set visibility of the view's scrollbars to enable."""
+        """Set visiblility of the view's scrollbars.
+
+        :param bool enable: True to enable the scrollbars """
         self._view.enableScrollBars(enable)
 
     @QtCore.pyqtSlot(bool)
     def enableHandDrag(self, enable):
-        """Set whether dragging the view with the hand cursor is allowed."""
+        """Set whether dragging the view with the hand cursor is allowed.
+
+        :param bool enable: True to enable hand dragging """
         self._view.enableHandDrag(enable)
 
     @QtCore.pyqtSlot()
@@ -456,12 +545,17 @@ class ImageViewer(QtGui.QFrame):
     # ------------------------------------------------------------------
 
     def handleWheelNotches(self, notches):
-        """Handle wheel notch event from underlying QGraphicsView."""
+        """Handle wheel notch event from underlying |QGraphicsView|.
+
+        :param float notches: Mouse wheel notches"""
         self.scaleImage(self._zoomFactorDelta ** notches)
 
     def closeEvent(self, event):
-        """Disconnect scrollbar signals before closing.
+        """Overriden in order to disconnect scrollbar signals before
+        closing.
 
+        :param QEvent event: instance of a |QEvent|
+        
         If this isn't done Python crashes!"""
         #self.scrollChanged.disconnect() #doesn't prevent crash
         self.disconnectSbarSignals()
@@ -469,29 +563,15 @@ class ImageViewer(QtGui.QFrame):
 
     # ------------------------------------------------------------------
 
-    def setPixmap(self, pixmap):
-        """Set pixmap associated with ImageViewer."""
-        assert isinstance(pixmap, QtGui.QPixmap)
-        self._pixmapItem.setPixmap(pixmap)
-        self._pixmapItem.setOffset(-pixmap.width()/2.0, -pixmap.height()/2.0)
-        self._pixmapItem.setTransformationMode(QtCore.Qt.SmoothTransformation)
-        self.fitToWindow()
-
-    def setName(self, name):
-        """Set name of view."""
-        if name:
-            self._label.setText("<b>%s</b>" % name)
-            self._label.show()
-        else:
-            self._label.setText("")
-            self._label.hide()
-        self._name = name
-
     def scaleImage(self, factor, combine=True):
         """Scale image by factor.
 
-        If combine is True scales the current zoomFactor by factor.
-        Otherwise just sets zoomFactor to factor."""
+        :param float factor: either new :attr:`zoomFactor` or amount to scale
+                             current :attr:`zoomFactor`
+
+        :param bool combine: if ``True`` scales the current
+                             :attr:`zoomFactor` by factor.  Otherwise
+                             just sets :attr:`zoomFactor` to factor"""
         if not self._pixmapItem.pixmap():
             return
 
@@ -509,9 +589,10 @@ class ImageViewer(QtGui.QFrame):
 # ====================================================================
 
 class MainWindow(QtGui.QMainWindow):
-    """Sample app to test the ImageViewer class."""
+    """Sample app to test the :class:`ImageViewer` class."""
 
     def __init__(self, pixmap):
+        """:param QPixmap pixmap: |QPixmap| to display"""
         super(MainWindow, self).__init__()
 
         self._imageViewer = ImageViewer(pixmap, "View 1")
@@ -638,8 +719,11 @@ class MainWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot(list)
     def sceneChanged(self, rects):
-        """Triggered when the underlying graphics scene has changed."""
-        r = self._imageViewer.sceneRect
+        """Triggered when the underlying graphics scene has changed.
+
+        :param list rects: scene rectangles that indicate the area that
+                           has been changed."""
+        r = self._imageViewer._sceneRect
         print("%3d Scene changed = (%.2f,%.2f,%.2f,%.2f %.2fx%.2f)" %
               (self.eventCounter, r.left(), r.top(), r.right(), r.bottom(),
                r.width(), r.height()))
@@ -658,12 +742,12 @@ class MainWindow(QtGui.QMainWindow):
     @QtCore.pyqtSlot()
     def scrollChanged(self):
         """Triggered when the views scrollbars have changed."""
-        hbar = self._imageViewer.horizontalScrollBar
+        hbar = self._imageViewer._horizontalScrollBar
         hpos = hbar.value()
         hmin = hbar.minimum()
         hmax = hbar.maximum()
 
-        vbar = self._imageViewer.verticalScrollBar
+        vbar = self._imageViewer._verticalScrollBar
         vpos = vbar.value()
         vmin = vbar.minimum()
         vmax = vbar.maximum()
@@ -677,7 +761,9 @@ class MainWindow(QtGui.QMainWindow):
     #overriden events
 
     def keyPressEvent(self, keyEvent):
-        """Overrides to enable panning while dragging."""
+        """Overrides to enable panning while dragging.
+
+        :param QKeyEvent keyEvent: instance of |QKeyEvent|"""
         assert isinstance(keyEvent, QtGui.QKeyEvent)
         if keyEvent.key() == QtCore.Qt.Key_Space:
             if (not keyEvent.isAutoRepeat() and
@@ -689,7 +775,9 @@ class MainWindow(QtGui.QMainWindow):
             super(MainWindow, self).keyPressEvent(keyEvent)
 
     def keyReleaseEvent(self, keyEvent):
-        """Overrides to disable panning while dragging."""
+        """Overrides to disable panning while dragging.
+
+        :param QKeyEvent keyEvent: instance of |QKeyEvent|"""
         assert isinstance(keyEvent, QtGui.QKeyEvent)
         if keyEvent.key() == QtCore.Qt.Key_Space:
             if not keyEvent.isAutoRepeat() and self._imageViewer.handDragging:
@@ -700,7 +788,9 @@ class MainWindow(QtGui.QMainWindow):
             super(MainWindow, self).keyReleaseEvent(keyEvent)
 
     def closeEvent(self, event):
-        """Handle close action."""
+        """Overrides close event to save application settings.
+
+        :param QEvent event: instance of |QEvent|"""
         self.writeSettings()
         event.accept()
 

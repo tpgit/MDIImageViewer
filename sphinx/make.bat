@@ -37,7 +37,7 @@ if "%1" == "help" (
 if "%1" == "clean" (
 	rem for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
 	rem del /q /s %BUILDDIR%\*
-        del/sqxy %BUILDDIR%
+        del/sqy %BUILDDIR%
 	goto end
 )
 

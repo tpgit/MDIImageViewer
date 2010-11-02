@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+needs_sphinx = '1.0'
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
@@ -33,7 +33,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.inheritance_diagram',
               'sphinx.ext.doctest',
               'sphinx.ext.todo',
-              'sphinx.ext.viewcode',
+              'sphinx.ext.extlinks',
               ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -46,7 +46,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'contents'
 
 # General information about the project.
 project = u'PyQt MDI Image Viewer'
@@ -95,10 +95,11 @@ pygments_style = 'sphinx'
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
 
-# -- Options for autodoc -------------------------------------------------------
+# -- Options for extensions   --------------------------------------------------
 
 #autodoc_member_order = 'groupwise'
 autodoc_member_order = 'bysource'
+autoclass_content = 'both'
 
 #autodoc_default_flags = ['show-inheritance']
 
@@ -106,14 +107,24 @@ inheritance_graph_attrs = dict(rankdir="TB")
 
 inheritance_node_attrs = dict(style='filled')
 
-html_secnumber_suffix = u'\u00a0\u00a0'     #\u00a0 is non-break space
+todo_include_todos = True
+
+extlinks = {
+    'pyqt4ref':
+    ('http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#%s',
+     ''),
+    'qtref':
+    ('http://doc.qt.nokia.com/latest/%s.html',
+     ''),
+    }
 
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #html_theme = 'default'
-html_theme = 'sphinxdoc'
+#html_theme = 'sphinxdoc'
+html_theme = 'githubtheme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -121,7 +132,7 @@ html_theme = 'sphinxdoc'
 #html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+html_theme_path = ['.']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -146,18 +157,31 @@ html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-#html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
+#html_use_smartypants = False
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
+html_sidebars = {
+    'index' :
+       ['indexsidebar.html',
+        'searchbox.html'],
+    '**' :
+       ['globaltoc.html',
+        'sourcelink.html',
+        'searchbox.html',
+        ],
+    
+    }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
 #html_additional_pages = {}
+#html_additional_pages = {'index': 'index.html'}
 
 # If false, no module index is generated.
 #html_domain_indices = True
@@ -188,6 +212,49 @@ html_show_copyright = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'PyQtMDIImageViewerdoc'
+
+html_secnumber_suffix = u'\u00a0\u00a0'     #\u00a0 is non-break space
+
+html_compact_lists = False
+
+rst_prolog="""
+.. role:: fs
+   :class: filesystem
+
+.. |QGraphicsView| replace:: :qtref:`QGraphicsView <qgraphicsview>`
+
+.. |QPixmap| replace:: :qtref:`QPixmap <qpixmap>`
+
+.. |QGraphicsScene| replace:: :qtref:`QGraphicsScene <qgraphicsscene>`
+
+.. |QWheelEvent| replace:: :qtref:`QWheelEvent <qwheelevent>`
+
+.. |QKeyEvent| replace:: :qtref:`QKeyEvent <qkeyevent>`
+
+.. |QEvent| replace:: :qtref:`QEvent <qevent>`
+
+.. |QAction| replace:: :qtref:`QAction <qaction>`
+
+.. |QIcon| replace:: :qtref:`QIcon <qicon>`
+
+.. |QKeySequence| replace:: :qtref:`QKeySequence <qkeysequence>`
+
+.. |QMainWindow| replace:: :qtref:`QMainWindow <qmainwindow>`
+
+.. |QMenu| replace:: :qtref:`QMenu <qmenu>`
+
+.. |QLabel| replace:: :qtref:`QLabel <qlabel>`
+
+.. |QMdiSubWindow| replace:: :qtref:`QMdiSubWindow <qmdisubwindow>`
+
+.. |QSettings| replace:: :qtref:`QSettings <qsettings>`
+
+.. |QWidget| replace:: :qtref:`QWidget <qwidget>`
+
+.. |QObject| replace:: :qtref:`QObject <qobject>`
+
+
+"""
 
 
 # -- Options for LaTeX output --------------------------------------------------

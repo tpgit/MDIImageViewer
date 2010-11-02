@@ -1,7 +1,10 @@
 .hg/
+.ropeproject/
+_eric4project/
 sphinx/_build/
 sphinx/githtml/
 *~
 *.pyc
 *.orig
 *.wpr
+*.e4p

@@ -4,11 +4,60 @@
  imageviewer -- Image viewer with panning and zooming
 ======================================================
 
-.. inheritance-diagram:: mdiimageviewer
+.. module:: imageviewer
+   :synopsis: Image viewer with panning and zooming.
 
-.. automodule:: imageviewer
+Inheritance Diagram
+===================
+
+.. inheritance-diagram:: imageviewer
+
+
+Description
+===========
+
+This module implements the :class:`ImageViewer` class which allows
+panning and zooming of |QPixmap|\ s by using a
+:class:`SynchableGraphicsView` embedded inside a :qtref:`QFrame
+<qframe>`.
+
+It contains the following classes:
+
++ :class:`ImageViewer` -- Image Viewer than can pan & zoom images
+  (|QPixmap|\ s).
+
++ :class:`SynchableGraphicsView` -- |QGraphicsView| that can synchronize
+  zooming & panning of multiple instances.
+
++ :class:`MainWindow` -- Sample app to test the :class:`ImageViewer` class.
+
+Reference
+=========
+
+ImageViewer
+-----------
+
+.. autoclass:: ImageViewer
    :members:
    :show-inheritance:
+
+SynchableGraphicsView
+---------------------
+
+.. autoclass:: SynchableGraphicsView
+   :members:
+   :show-inheritance:
+
+MainWindow
+----------
+
+.. autoclass:: MainWindow
+   :members:
+   :show-inheritance:
+
+   **Usage**::
+
+     python imageviewer.py imagefilename
 
 ..
    Local Variables:

@@ -1,10 +1,14 @@
-.. -*- mode: rst -*-
+:version: $RCSfile: index.rst,v $ $Revision: 693361f85272 $ $Date: 2010/08/23 15:08:52 $
 
-================================
- MDI Image Viewer sample README
-================================
+===================
+ Modules Reference
+===================
 
-See the documentation at: http://tpgit.github.com/MDIImageViewer/.
+.. toctree::
+   :maxdepth: 2
+
+   imageviewer
+   mdiimageviewer
 
 ..
    Local Variables:

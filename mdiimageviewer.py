@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # $RCSfile: mdiimageviewer.pyw,v $ $Revision: 00c5d1c96a3b $ $Date: 2010/10/18 20:43:38 $
 
-"""MDI ImageViewer Window class
+"""
+MDI Image Viewer Window
 
-   based on Trolltech MDI.py example.
+based on PyQt MDI.py example.
+
 """
 
 # ====================================================================
@@ -67,14 +69,46 @@ class MdiChild(imageviewer.ImageViewer):
     """ImageViewer that implements <Space> key pressed panning."""
 
     def __init__(self, pixmap, filename, name):
+        """:param pixmap: |QPixmap| to display
+        :type pixmap: |QPixmap| or None
+        :param filename: |QPixmap| filename
+        :type filename: str or None
+        :param name: name associated with this ImageViewer
+        :type name: str or None"""
         super(MdiChild, self).__init__(pixmap, name)
 
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         self._isUntitled = True
-        self.setCurrentFile(filename)
+        self.currentFile = filename
+
+    # ------------------------------------------------------------------
+
+    @property
+    def currentFile(self):
+        """Current filename (*str*)."""
+        return self._currentFile
+
+    @currentFile.setter
+    def currentFile(self, filename):
+        self._currentFile = QtCore.QFileInfo(filename).canonicalFilePath()
+        self._isUntitled = False
+        self.setWindowTitle(self.userFriendlyCurrentFile)
+
+    @property
+    def userFriendlyCurrentFile(self):
+        """Get current filename without path (*str*)."""
+        if self.currentFile:
+            return strippedName(self.currentFile)
+        else:
+            return ""
+
+    # ------------------------------------------------------------------
 
     def keyPressEvent(self, keyEvent):
-        """Overrides to enable panning while dragging."""
+        """Overrides to enable panning while dragging.
+
+        :param QKeyEvent keyEvent: instance of |QKeyEvent|"""
+
         assert isinstance(keyEvent, QtGui.QKeyEvent)
         if keyEvent.key() == QtCore.Qt.Key_Space:
             if (not keyEvent.isAutoRepeat() and
@@ -86,7 +120,9 @@ class MdiChild(imageviewer.ImageViewer):
         super(MdiChild, self).keyPressEvent(keyEvent)
 
     def keyReleaseEvent(self, keyEvent):
-        """Overrides to disable panning while dragging."""
+        """Overrides to disable panning while dragging.
+
+        :param QKeyEvent keyEvent: instance of |QKeyEvent|"""
         assert isinstance(keyEvent, QtGui.QKeyEvent)
         if keyEvent.key() == QtCore.Qt.Key_Space:
             if (not keyEvent.isAutoRepeat() and
@@ -97,30 +133,10 @@ class MdiChild(imageviewer.ImageViewer):
             keyEvent.ignore()
         super(MdiChild, self).keyReleaseEvent(keyEvent)
 
-    # ------------------------------------------------------------------
-
-    @property
-    def currentFile(self):
-        """Get current filename."""
-        return self._currentFile
-
-    # ------------------------------------------------------------------
-
-    def userFriendlyCurrentFile(self):
-        if self._currentFile:
-            return strippedName(self._currentFile)
-        else:
-            return ""
-
-    def setCurrentFile(self, filename):
-        self._currentFile = QtCore.QFileInfo(filename).canonicalFilePath()
-        self._isUntitled = False
-        self.setWindowTitle(self.userFriendlyCurrentFile())
-
 # ====================================================================
 
 class MDIImageViewerWindow(QtGui.QMainWindow):
-    """View multiple images with optionally synchonized zooming & panning."""
+    """Views multiple images with optionally synchonized zooming & panning."""
 
     MaxRecentFiles = 10
 
@@ -148,6 +164,8 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         self._recentFileMapper.mapped[str].connect(self.openRecentFile)
 
         self.createActions()
+        self.addAction(self._activateSubWindowSystemMenuAct)
+
         self.createMenus()
         self.updateMenus()
         self.createStatusBar()
@@ -155,12 +173,23 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         self.readSettings()
         self.updateStatusBar()
 
+
         self.setUnifiedTitleAndToolBarOnMac(True)
 
     # ------------------------------------------------------------------
 
     def createMappedAction(self, icon, text, parent, shortcut, methodName):
-        """Create action that is mapped via methodName to call."""
+        """Create |QAction| that is mapped via methodName to call.
+
+        :param icon: icon associated with |QAction|
+        :type icon: |QIcon| or None
+        :param str text: the |QAction| descriptive text
+        :param QObject parent: the parent |QObject|
+        :param QKeySequence shortcut: the shortcut |QKeySequence|
+        :param str methodName: name of method to call when |QAction| is
+                               triggered
+        :rtype: |QAction|"""
+
         if icon is not None:
             action = QtGui.QAction(icon, text, parent,
                                    shortcut=shortcut,
@@ -316,8 +345,9 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
         self._closeAct = QtGui.QAction(
             "Cl&ose", self,
-            #shortcut=QtGui.QKeySequence.Close,
-            shortcut="Ctrl+Alt+F4",
+            shortcut=QtGui.QKeySequence.Close,
+            shortcutContext=QtCore.Qt.WidgetShortcut,
+            #shortcut="Ctrl+Alt+F4",
             statusTip="Close the active window",
             triggered=self._mdiArea.closeActiveSubWindow)
 
@@ -401,7 +431,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     def updateMenus(self):
         """Update menus."""
-        hasMdiChild = (self.activeMdiChild() is not None)
+        hasMdiChild = (self.activeMdiChild is not None)
 
         self._scrollMenu.setEnabled(hasMdiChild)
         self._zoomMenu.setEnabled(hasMdiChild)
@@ -438,7 +468,6 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     def updateWindowMenu(self):
         """Update the Window menu."""
         self._windowMenu.clear()
-        self._windowMenu.addAction(self._activateSubWindowSystemMenuAct)
         self._windowMenu.addAction(self._closeAct)
         self._windowMenu.addAction(self._closeAllAct)
         self._windowMenu.addSeparator()
@@ -455,15 +484,26 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         for i, window in enumerate(windows):
             child = window.widget()
 
-            text = "%d %s" % (i + 1, child.userFriendlyCurrentFile())
+            text = "%d %s" % (i + 1, child.userFriendlyCurrentFile)
             if i < 9:
                 text = '&' + text
 
             action = self._windowMenu.addAction(text)
             action.setCheckable(True)
-            action.setChecked(child == self.activeMdiChild())
+            action.setChecked(child == self.activeMdiChild)
             action.triggered.connect(self._windowMapper.map)
             self._windowMapper.setMapping(action, window)
+
+    def createStatusBarLabel(self, stretch=0):
+        """Create status bar label.
+
+        :param int stretch: stretch factor
+        :rtype: |QLabel|"""
+        label = QtGui.QLabel()
+        label.setFrameStyle(QtGui.QFrame.Panel | QtGui.QFrame.Sunken)
+        label.setLineWidth(2)
+        self.statusBar().addWidget(label, stretch)
+        return label
 
     def createStatusBar(self):
         """Create status bar."""
@@ -477,22 +517,26 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
         statusBar.showMessage("Ready")
 
-    def createStatusBarLabel(self, stretch=0, style=QtGui.QFrame.Sunken):
-        """Create status bar label."""
-        label = QtGui.QLabel()
-        label.setFrameStyle(QtGui.QFrame.Panel | QtGui.QFrame.Sunken)
-        label.setLineWidth(2)
-        self.statusBar().addWidget(label, stretch)
-        return label
+    # ------------------------------------------------------------------
+
+    @property
+    def activeMdiChild(self):
+        """Get active MDI child (:class:`MdiChild` or *None*)."""
+        activeSubWindow = self._mdiArea.activeSubWindow()
+        if activeSubWindow:
+            return activeSubWindow.widget()
+        return None
 
     # ------------------------------------------------------------------
 
     #overriden methods
 
     def closeEvent(self, event):
-        """Handle close action."""
+        """Overrides close event to save application settings.
+
+        :param QEvent event: instance of |QEvent|"""
         self._mdiArea.closeAllSubWindows()
-        if self.activeMdiChild():
+        if self.activeMdiChild:
             event.ignore()
         else:
             self.writeSettings()
@@ -502,20 +546,23 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot(str)
     def mappedImageViewerAction(self, methodName):
-        """Perform action mapped to ImageViewer methodName."""
-        activeViewer = self.activeMdiChild()
+        """Perform action mapped to :class:`imageviewer.ImageViewer`
+        methodName.
+
+        :param str methodName: method to call"""
+        activeViewer = self.activeMdiChild
         if hasattr(activeViewer, str(methodName)):
             getattr(activeViewer, str(methodName))()
 
     @QtCore.pyqtSlot()
     def toggleSynchPan(self):
-        """Toggle synch subwindow panning."""
+        """Toggle synchronized subwindow panning."""
         if self._synchPanAct.isChecked():
-            self.synchPan(self.activeMdiChild())
+            self.synchPan(self.activeMdiChild)
 
     @QtCore.pyqtSlot()
     def panChanged(self):
-        """Synchronize subwindow panning."""
+        """Synchronize subwindow pans."""
         mdiChild = self.sender()
         while mdiChild is not None and type(mdiChild) != MdiChild:
             mdiChild = mdiChild.parent()
@@ -524,13 +571,13 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot()
     def toggleSynchZoom(self):
-        """Toggle synch subwindow zoom."""
+        """Toggle synchronized subwindow zooming."""
         if self._synchZoomAct.isChecked():
-            self.synchZoom(self.activeMdiChild())
+            self.synchZoom(self.activeMdiChild)
 
     @QtCore.pyqtSlot()
     def zoomChanged(self):
-        """Synchronize subwindow zooming."""
+        """Synchronize subwindow zooms."""
         mdiChild = self.sender()
         if self._synchZoomAct.isChecked():
             self.synchZoom(mdiChild)
@@ -545,7 +592,9 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot(str)
     def openRecentFile(self, filename):
-        """Open a recent file."""
+        """Open a recent file.
+
+        :param str filename: filename to view"""
         self.loadFile(filename)
 
     @QtCore.pyqtSlot()
@@ -569,7 +618,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot()
     def toggleScrollbars(self):
-        """Toggle subwindow scrollbars."""
+        """Toggle subwindow scrollbar visibility."""
         checked = self._showScrollbarsAct.isChecked()
 
         windows = self._mdiArea.subWindowList()
@@ -579,7 +628,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot()
     def toggleStatusbar(self):
-        """Toggle subwindow scrollbars."""
+        """Toggle status bar visibility."""
         self.statusBar().setVisible(self._showStatusbarAct.isChecked())
 
     @QtCore.pyqtSlot()
@@ -592,20 +641,27 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot(QtGui.QMdiSubWindow)
     def subWindowActivated(self, window):
-        """Handle MDI subwindow activated signal."""
+        """Handle |QMdiSubWindow| activated signal.
+
+        :param |QMdiSubWindow| window: |QMdiSubWindow| that was just
+                                       activated"""
         self.updateStatusBar()
 
     @QtCore.pyqtSlot(QtGui.QMdiSubWindow)
     def setActiveSubWindow(self, window):
-        """Set active MDI subwindow."""
+        """Set active |QMdiSubWindow|.
+
+        :param |QMdiSubWindow| window: |QMdiSubWindow| to activate """
         if window:
             self._mdiArea.setActiveSubWindow(window)
 
     # ------------------------------------------------------------------
 
     def loadFile(self, filename):
-        """Load filename into new MdiChild window."""
-        activeMdiChild = self.activeMdiChild()
+        """Load filename into new :class:`MdiChild` window.
+
+        :param str filename: filename to load"""
+        activeMdiChild = self.activeMdiChild
         QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         pixmap = QtGui.QPixmap(filename)
         QtGui.QApplication.restoreOverrideCursor()
@@ -634,7 +690,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     def updateStatusBar(self):
         """Update status bar."""
         self.statusBar().setVisible(self._showStatusbarAct.isChecked())
-        imageViewer = self.activeMdiChild()
+        imageViewer = self.activeMdiChild
         if not imageViewer:
             self._sbLabelName.setText("")
             self._sbLabelSize.setText("")
@@ -684,15 +740,15 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         self._sbLabelDate.show()
         self._sbLabelZoom.show()
 
-    def activeMdiChild(self):
-        """Return active ImageViewer."""
-        activeSubWindow = self._mdiArea.activeSubWindow()
-        if activeSubWindow:
-            return activeSubWindow.widget()
-        return None
-
     def createMdiChild(self, pixmap, filename):
-        """Create new ImageViewer for pixmap."""
+        """Create new :class:`MdiChild` for pixmap.
+
+        :param pixmap: |QPixmap| to display in :class:`MdiChild`
+        :type pixmap: |QPixmap| or None
+        :param filename: |QPixmap| filename
+        :type filename: str or None
+        :rtype: :class:`MdiChild`"""
+
         child = MdiChild(pixmap,
                          filename,
                          "Child %d" % (len(self._mdiArea.subWindowList())+1))
@@ -712,7 +768,9 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
             QtGui.qApp.setLayoutDirection(QtCore.Qt.LeftToRight)
 
     def synchPan(self, fromViewer):
-        """Synch panning of all subwindowws to same as fromViewer."""
+        """Synch panning of all subwindowws to the same as *fromViewer*.
+
+        :param fromViewer: :class:`MdiChild` that initiated synching"""
         assert isinstance(fromViewer, MdiChild)
         if not fromViewer:
             return
@@ -729,7 +787,9 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         self._handlingScrollChangedSignal = False
 
     def synchZoom(self, fromViewer):
-        """Synch zoom of all subwindowws to same as fromViewer."""
+        """Synch zoom of all subwindowws to the same as *fromViewer*.
+
+        :param fromViewer: :class:`MdiChild` that initiated synching"""
         if not fromViewer:
             return
         newZoomFactor = fromViewer.zoomFactor
@@ -742,7 +802,10 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     # ------------------------------------------------------------------
 
     def saveDialogState(self, dialog, groupName):
-        """Save dialog state, position & size."""
+        """Save dialog state, position & size.
+
+        :param |QDialog| dialog: dialog to save state of
+        :param str groupName: |QSettings| group name"""
         assert isinstance(dialog, QtGui.QDialog)
 
         settings = QtCore.QSettings()
@@ -755,7 +818,9 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         settings.endGroup()
 
     def restoreDialogState(self, dialog, groupName):
-        """Restore dialog state, position & size."""
+        """Restore dialog state, position & size.
+
+        :param str groupName: |QSettings| group name"""
         assert isinstance(dialog, QtGui.QDialog)
 
         settings = QtCore.QSettings()
@@ -806,7 +871,11 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
             toBool(settings.value(SETTING_SYNCHPAN, True)))
 
     def updateRecentFileSettings(self, filename, delete=False):
-        """Update recent file list setting."""
+        """Update recent file list setting.
+
+        :param str filename: filename to add or remove from recent file
+                             list
+        :param bool delete: if True then filename removed, otherwise added"""
         settings = QtCore.QSettings()
         files = list(settings.value(SETTING_RECENTFILELIST, []))
 

@@ -4,9 +4,46 @@
  mdiimageviewer -- Synchable image viewers using MDI style interface
 =====================================================================
 
+.. module:: mdiimageviewer
+   :synopsis: Synchable image viewers using MDI style interface.
+
+Inheritance Diagram
+===================
+
 .. inheritance-diagram:: mdiimageviewer
 
-.. automodule:: mdiimageviewer
+
+Description
+===========
+
+This module implements the :class:`MDIImageViewerWindow` class which
+allows optionally synchronized panning and zooming of multiple
+|QPixmap|\ s.
+
+It contains the following classes:
+
++ :class:`MdiChild` -- :class:`ImageViewer <imageviewer.ImageViewer>`
+  implements mouse drag panning that is activated by pressing the
+  :kbd:`<Space>` key.
+
++ :class:`MDIImageViewerWindow` -- Views multiple images (|QPixmap|\ s)
+  with optionally synchonized zooming & panning.
+
+
+Reference
+=========
+
+MdiChild
+--------
+
+.. autoclass:: MdiChild
+   :members:
+   :show-inheritance:
+
+MDIImageViewerWindow
+--------------------
+
+.. autoclass:: MDIImageViewerWindow
    :members:
    :show-inheritance:
 

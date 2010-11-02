@@ -1,0 +1,34 @@
+{# -*- mode: jinja-html-mumamo;-*- #}
+{% extends "default/layout.html" %}
+
+{% block rootrellink %}
+        <li><a href="{{ pathto('index') }}">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="{{ pathto('contents') }}">v{{ version }} Documentation</a>
+          &raquo;</li>
+{% endblock %}
+
+{%- block footer %}
+    <div class="footer">
+    {%- if show_copyright %}
+      {%- if hasdoc('copyright') %}
+        {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+      {%- else %}
+        {% trans copyright=copyright|e %}&copy; Copyright {{ copyright }}.{% endtrans %}
+      {%- endif %}
+    {%- endif %}
+    <a href="http://creativecommons.org/licenses/by/3.0/us/" >
+      <img src="{{ pathto("_static/creativecommons-80x15.png", 1) }}"
+	   align="absmiddle" border="0" alt="Creative Commons License"/>
+     </a>
+    <a href="http://creativecommons.org/licenses/by/3.0/us/">
+     Creative Commons Attribution 3.0 
+    </a> License.&nbsp;
+    {%- if last_updated %}
+      {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.&nbsp;{% endtrans %}
+    {%- endif %}
+    {%- if show_sphinx %}
+      {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+    {%- endif %}
+    </div>
+{%- endblock %}
+
