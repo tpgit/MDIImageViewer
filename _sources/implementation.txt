@@ -65,12 +65,12 @@ The :mod:`mdiimageviewer` module demonstrates:
          statusTip="Close the active window",
          triggered=self._mdiArea.closeActiveSubWindow)
 
-#. Activating the window system menu of MDI subwindows via
-   :kbd:`Ctrl+Space` (:kbd:`Alt+Space` activates the Main Window system
-   menu) in :meth:`MDIImageViewerWindow.createActions`. A |QAction| is
-   created and ``addAction()`` of |QMainWindow| is used rather than
-   adding it to a |QMenu| (since we don't want it to be a visible menu
-   item).
++ Activating the window system menu of MDI subwindows via
+  :kbd:`Ctrl+Space` (:kbd:`Alt+Space` activates the Main Window system
+  menu) in :meth:`MDIImageViewerWindow.createActions`. A |QAction| is
+  created and ``addAction()`` of |QMainWindow| is used rather than
+  adding it to a |QMenu| (since we don't want it to be a visible menu
+  item).
 
 + Using the status bar to display image information for the currently
   active subwindow in :meth:`MDIImageViewerWindow.updateStatusBar`.
