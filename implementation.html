@@ -1,0 +1,324 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2 Implementation Notes &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/github.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="index.html" />
+    <link rel="next" title="3 Remaining Implementation Questions" href="questions.html" />
+    <link rel="prev" title="1 Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="questions.html" title="3 Remaining Implementation Questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1 Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="implementation-notes">
+<h1>2  Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="qt-programming-notes">
+<h2>2.1  Qt Programming Notes<a class="headerlink" href="#qt-programming-notes" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="imageviewer.html#module-imageviewer" title="imageviewer: Image viewer with panning and zooming."><tt class="xref py py-mod docutils literal"><span class="pre">imageviewer</span></tt></a> module demonstrates:</p>
+<ul>
+<li><p class="first">Using <a class="reference external" href="http://doc.qt.nokia.com/latest/qgraphicsview.html">QGraphicsView</a> to implement zooming &amp; panning of a
+<a class="reference external" href="http://doc.qt.nokia.com/latest/qpixmap.html">QPixmap</a>. This works much faster for large images at high zoom levels
+than <span class="filesystem">PyQt4\examples\widgets\imageviewer.pyw</span> which uses a
+<a class="reference external" href="http://doc.qt.nokia.com/latest/qlabel.html">QLabel</a>. The Qt documentation for the slower
+ImageViewer example is at the <a class="reference external" href="http://doc.qt.nokia.com/latest/widgets-imageviewer.html">nokia website</a>.</p>
+</li>
+<li><p class="first">Keeping track of scroll and view transform changes so other classes
+can implement synchronized zooming and panning of multiple views.</p>
+</li>
+<li><p class="first">Zooming by <tt class="kbd docutils literal"><span class="pre">Ctrl+Mouse</span> <span class="pre">wheel</span></tt> rolling in
+<a class="reference internal" href="imageviewer.html#imageviewer.SynchableGraphicsView.wheelEvent" title="imageviewer.SynchableGraphicsView.wheelEvent"><tt class="xref py py-meth docutils literal"><span class="pre">SynchableGraphicsView.wheelEvent()</span></tt></a> (<a class="reference external" href="http://doc.qt.nokia.com/latest/qgraphicsview.html">QGraphicsView</a> already
+handles vertical scrolling by rolling the mouse wheel, and horizontal
+scrolling via <tt class="kbd docutils literal"><span class="pre">Alt+Mouse</span> <span class="pre">wheel</span></tt> rolling)</p>
+</li>
+</ul>
+<p>The <a class="reference internal" href="mdiimageviewer.html#module-mdiimageviewer" title="mdiimageviewer: Synchable image viewers using MDI style interface."><tt class="xref py py-mod docutils literal"><span class="pre">mdiimageviewer</span></tt></a> module demonstrates:</p>
+<ul>
+<li><p class="first">Synchronized zooming and panning of multiple image viewers.</p>
+</li>
+<li><p class="first">Activating <tt class="docutils literal"><span class="pre">QtGui.QGraphicsView.ScrollHandDrag</span></tt> while the
+<tt class="kbd docutils literal"><span class="pre">Space</span></tt> key is held down in <a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MdiChild.keyPressEvent" title="mdiimageviewer.MdiChild.keyPressEvent"><tt class="xref py py-meth docutils literal"><span class="pre">MdiChild.keyPressEvent()</span></tt></a>.</p>
+<p>The documentation at
+<a class="reference external" href="http://doc.qt.nokia.com/latest/qwidget.html#keyReleaseEvent">http://doc.qt.nokia.com/latest/qwidget.html#keyReleaseEvent</a> is a bit
+unclear. It means that <tt class="docutils literal"><span class="pre">keyReleaseEvents</span></tt> are normally not passed on
+to other classes since the default implementation is to <tt class="docutils literal"><span class="pre">accept()</span></tt>
+the event.</p>
+<p>You have to override <tt class="docutils literal"><span class="pre">keyPressEvent</span></tt> and call <tt class="docutils literal"><span class="pre">event.ignore()</span></tt> to
+allow <tt class="docutils literal"><span class="pre">keyPressEvent</span></tt>s to be seen by other classes.</p>
+</li>
+<li><p class="first">Using <a class="reference external" href="http://doc.qt.nokia.com/latest/qsignalmapper.html">QSignalMapper</a> to implement a Recently
+Used Files list on the <em class="guilabel">File</em> menu in
+<a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.updateRecentFileActions" title="mdiimageviewer.MDIImageViewerWindow.updateRecentFileActions"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.updateRecentFileActions()</span></tt></a>.</p>
+</li>
+<li><p class="first">Using <a class="reference external" href="http://doc.qt.nokia.com/latest/qsignalmapper.html">QSignalMapper</a> to call methods &#8212;
+specified by string &#8212; of the currently active subwindow in
+<a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createMappedAction" title="mdiimageviewer.MDIImageViewerWindow.createMappedAction"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.createMappedAction()</span></tt></a>.</p>
+</li>
+<li><p class="first">Using <a class="reference external" href="http://doc.qt.nokia.com/latest/qaction.html#shortcutContext-prop">shortcutContext</a>
+in <a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createActions" title="mdiimageviewer.MDIImageViewerWindow.createActions"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.createActions()</span></tt></a> to avoid
+<tt class="docutils literal"><span class="pre">QAction::eventFilter:</span> <span class="pre">Ambiguous</span> <span class="pre">shortcut</span> <span class="pre">overload:</span> <span class="pre">Ctrl+F4</span></tt>
+messages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">_closeAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+    <span class="s">&quot;Cl&amp;ose&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+    <span class="n">shortcut</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QKeySequence</span><span class="o">.</span><span class="n">Close</span><span class="p">,</span>
+    <span class="n">shortcutContext</span><span class="o">=</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WidgetShortcut</span><span class="p">,</span>
+    <span class="n">statusTip</span><span class="o">=</span><span class="s">&quot;Close the active window&quot;</span><span class="p">,</span>
+    <span class="n">triggered</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">closeActiveSubWindow</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ol class="arabic">
+<li><p class="first">Activating the window system menu of MDI subwindows via
+<tt class="kbd docutils literal"><span class="pre">Ctrl+Space</span></tt> (<tt class="kbd docutils literal"><span class="pre">Alt+Space</span></tt> activates the Main Window system
+menu) in <a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createActions" title="mdiimageviewer.MDIImageViewerWindow.createActions"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.createActions()</span></tt></a>. A <a class="reference external" href="http://doc.qt.nokia.com/latest/qaction.html">QAction</a> is
+created and <tt class="docutils literal"><span class="pre">addAction()</span></tt> of <a class="reference external" href="http://doc.qt.nokia.com/latest/qmainwindow.html">QMainWindow</a> is used rather than
+adding it to a <a class="reference external" href="http://doc.qt.nokia.com/latest/qmenu.html">QMenu</a> (since we don&#8217;t want it to be a visible menu
+item).</p>
+</li>
+</ol>
+<ul>
+<li><p class="first">Using the status bar to display image information for the currently
+active subwindow in <a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.updateStatusBar" title="mdiimageviewer.MDIImageViewerWindow.updateStatusBar"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.updateStatusBar()</span></tt></a>.</p>
+</li>
+<li><p class="first">Using Qt resource files for menu icons.</p>
+</li>
+<li><p class="first">Saving application window size &amp; position in
+<a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.writeSettings" title="mdiimageviewer.MDIImageViewerWindow.writeSettings"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.writeSettings()</span></tt></a>.</p>
+</li>
+<li><p class="first">Saving File Open dialog size, position &amp; state (including selected
+filter name) in <a class="reference internal" href="mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.saveDialogState" title="mdiimageviewer.MDIImageViewerWindow.saveDialogState"><tt class="xref py py-meth docutils literal"><span class="pre">MDIImageViewerWindow.saveDialogState()</span></tt></a>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="pyqt-programming-notes">
+<h2>2.2  PyQt Programming Notes<a class="headerlink" href="#pyqt-programming-notes" title="Permalink to this headline">¶</a></h2>
+<p>The following is done to use the more pythonic <a class="reference external" href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#selecting-incompatible-apis">PyQt API
+version 2</a> whether or not you are using
+Python 2 or Python 3:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sip</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QDate&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QTime&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QDateTime&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QUrl&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QTextStream&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QVariant&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sip</span><span class="o">.</span><span class="n">setapi</span><span class="p">(</span><span class="s">&#39;QString&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I use the <a class="reference external" href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#new-style-signal-and-slot-support">new-style signal/slot mechanism</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">subWindowActivated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subWindowActivated</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>rather than the <a class="reference external" href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#old-style-signal-and-slot-support">older mechanism</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;subWindowActivated()&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;subWindowActivated()&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>I used <a class="reference external" href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#pyrcc4">pyrcc4</a> to convert a Qt resource collection
+file <span class="filesystem">icons.qrc</span> into <span class="filesystem">icons_rc.py</span> which can be imported into
+any python file. For example the icon <span class="filesystem">exit.png</span> can then be
+referenced simply by doing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">icons_rc</span>
+<span class="o">...</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">_exitAct</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span>
+    <span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s">&#39;:/exit.png&#39;</span><span class="p">),</span>
+    <span class="s">&quot;E&amp;xit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span>
+    <span class="n">shortcut</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QKeySequence</span><span class="o">.</span><span class="n">Quit</span><span class="p">,</span>
+    <span class="n">statusTip</span><span class="o">=</span><span class="s">&quot;Exit the application&quot;</span><span class="p">,</span>
+    <span class="n">triggered</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">closeAllWindows</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-programming-notes">
+<h2>2.3  Python Programming Notes<a class="headerlink" href="#python-programming-notes" title="Permalink to this headline">¶</a></h2>
+<p>The following is done to allow Python 3 syntax even when running Python
+2.6+:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">future_builtins</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>In theory these programs should work equally well under Python 3 but
+that hasn&#8217;t been tested yet.</p>
+</div>
+<div class="section" id="sphinx-documentation-notes">
+<h2>2.4  Sphinx Documentation Notes<a class="headerlink" href="#sphinx-documentation-notes" title="Permalink to this headline">¶</a></h2>
+<p>I&#8217;ve written all the project documentation (including these web pages)
+using <a class="reference external" href="http://sphinx.pocoo.org">Sphinx</a> &#8212; the source files can be
+found on <a class="reference external" href="http://github.com/tpgit/MDIImageViewer/tree/master/sphinx/">here</a>.</p>
+<p>The Sphinx techniques demonstrated are:</p>
+<ul>
+<li><p class="first">Generating an &#8220;orphan&#8221; Home page that uses a custom sidebar.</p>
+</li>
+<li><p class="first">Using the <a class="reference external" href="http://sphinx.pocoo.org/ext/autodoc.html">autodoc extension</a> to generate the <a class="reference internal" href="modules.html"><em>module
+documentation</em></a>.</p>
+</li>
+<li><p class="first">Using the <a class="reference external" href="http://sphinx.pocoo.org/ext/inheritance.html">inheritance diagram extension</a> to add inheritance
+diagrams to the <a class="reference internal" href="modules.html"><em>module documentation</em></a>.</p>
+</li>
+<li><p class="first">Using the <a class="reference external" href="http://sphinx.pocoo.org/ext/extlinks.html">extlinks extension</a> to shorten references to
+the <a class="reference external" href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html">PyQt v4 - Python Bindings for Qt v4: Reference Guide</a>
+and the <a class="reference external" href="http://doc.qt.nokia.com/latest/classes.html">Qt Class Documentation</a>.</p>
+</li>
+<li><p class="first">Creating a custom theme (based of the <a class="reference external" href="http://sphinx.pocoo.org/theming.html#builtin-themes">default</a> theme) to have
+a custom footer with the <a class="reference external" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0</a> Licence &amp; logo
+rather than a copyright notice. I also have a custom <tt class="docutils literal"><span class="pre">css</span></tt> file to
+style some elements differently than the defaults.</p>
+</li>
+<li><p class="first">Using a global Table of Contents in the sidebar navigation panel with
+the current page indicated with a yellowish bullet. Most of the sites
+I&#8217;ve seen use the local TOC which means you have to jump back to their
+separate Table of Contents page to get a site overview.</p>
+</li>
+<li><p class="first">Using the <tt class="docutils literal"><span class="pre">rst_prolog</span></tt> <span class="filesystem">conf.py</span> setting to create a custom
+<tt class="docutils literal"><span class="pre">role</span></tt> that can be used in any of the source directory&#8217;s <span class="filesystem">.rst</span>
+files.</p>
+</li>
+<li><p class="first">Using the <tt class="docutils literal"><span class="pre">rst_prolog</span></tt> <span class="filesystem">conf.py</span> setting to create quick
+replacements for common Qt Class documentation links. For example,
+<tt class="docutils literal"><span class="pre">|QGraphicsView|</span></tt> generates the following link:
+<a class="reference external" href="http://doc.qt.nokia.com/latest/qgraphicsview.html">QGraphicsView</a>. These replacements even work inside Python
+docstrings.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="project-hosting-on-github-notes">
+<h2>2.5  Project Hosting on GitHub Notes<a class="headerlink" href="#project-hosting-on-github-notes" title="Permalink to this headline">¶</a></h2>
+<p>You can directly use Sphinx generated pages as <a class="reference external" href="http://pages.github.com/">GitHub Pages</a>, but as the &#8220;Using Jekyll For Complex
+Layouts&#8221; section explains:</p>
+<blockquote>
+&#8220;As of December 27, 2009, you can completely opt-out of Jekyll
+processing by creating a file named <span class="filesystem">.nojekyll</span> in the root of
+your pages repo and pushing that to GitHub. This should only be
+necessary if your site uses directories that begin with an
+underscore, as Jekyll sees these as special dirs and does not copy
+them to the final destination.&#8221;</blockquote>
+<p>Since Sphinx generates a number of subdirectories that start with <tt class="docutils literal"><span class="pre">_</span></tt>
+in its build directory, adding <span class="filesystem">.nojekyll</span> is thus required.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="contents.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1  Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">2  Implementation Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#qt-programming-notes">2.1  Qt Programming Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pyqt-programming-notes">2.2  PyQt Programming Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-programming-notes">2.3  Python Programming Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sphinx-documentation-notes">2.4  Sphinx Documentation Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#project-hosting-on-github-notes">2.5  Project Hosting on GitHub Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="questions.html">3  Remaining Implementation Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">4  Modules Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todolist.html">5  To Do List</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/implementation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="questions.html" title="3 Remaining Implementation Questions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="1 Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+    <a href="http://creativecommons.org/licenses/by/3.0/us/" >
+      <img src="_static/creativecommons-80x15.png"
+	   align="absmiddle" border="0" alt="Creative Commons License"/>
+     </a>
+    <a href="http://creativecommons.org/licenses/by/3.0/us/">
+     Creative Commons Attribution 3.0 
+    </a> License.&nbsp;
+      Last updated on Nov 02, 2010.&nbsp;
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>mdiimageviewer &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
-    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/github.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -22,6 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" /> 
   </head>
@@ -35,27 +37,13 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">PyQt MDI Image Viewer v0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+
           <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
-    </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -66,9 +54,11 @@
 <span class="c">#!/usr/bin/env python</span>
 <span class="c"># $RCSfile: mdiimageviewer.pyw,v $ $Revision: 00c5d1c96a3b $ $Date: 2010/10/18 20:43:38 $</span>
 
-<span class="sd">&quot;&quot;&quot;MDI ImageViewer Window class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MDI Image Viewer Window</span>
 
-<span class="sd">   based on Trolltech MDI.py example.</span>
+<span class="sd">based on PyQt MDI.py example.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c"># ====================================================================</span>
@@ -109,7 +99,7 @@
 
 <span class="c"># ====================================================================</span>
 
-<div class="viewcode-block" id="toBool"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.toBool">[docs]</a><span class="k">def</span> <span class="nf">toBool</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">toBool</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Module function to convert a value to bool.</span>
 
@@ -122,7 +112,7 @@
         <span class="k">return</span> <span class="bp">False</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-</div>
+
 <span class="k">def</span> <span class="nf">strippedName</span><span class="p">(</span><span class="n">fullFilename</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFileInfo</span><span class="p">(</span><span class="n">fullFilename</span><span class="p">)</span><span class="o">.</span><span class="n">fileName</span><span class="p">()</span>
 
@@ -132,14 +122,46 @@
     <span class="sd">&quot;&quot;&quot;ImageViewer that implements &lt;Space&gt; key pressed panning.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;:param pixmap: |QPixmap| to display</span>
+<span class="sd">        :type pixmap: |QPixmap| or None</span>
+<span class="sd">        :param filename: |QPixmap| filename</span>
+<span class="sd">        :type filename: str or None</span>
+<span class="sd">        :param name: name associated with this ImageViewer</span>
+<span class="sd">        :type name: str or None&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MdiChild</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WA_DeleteOnClose</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_isUntitled</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setCurrentFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentFile</span> <span class="o">=</span> <span class="n">filename</span>
 
+    <span class="c"># ------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">currentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Current filename (*str*).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currentFile</span>
+
+    <span class="nd">@currentFile.setter</span>
+<div class="viewcode-block" id="MdiChild.currentFile"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MdiChild.currentFile">[docs]</a>    <span class="k">def</span> <span class="nf">currentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentFile</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFileInfo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">canonicalFilePath</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_isUntitled</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">userFriendlyCurrentFile</span><span class="p">())</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="MdiChild.userFriendlyCurrentFile"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MdiChild.userFriendlyCurrentFile">[docs]</a>    <span class="k">def</span> <span class="nf">userFriendlyCurrentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get current filename without path (*str*).&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentFile</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">strippedName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currentFile</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;&quot;</span>
+
+    <span class="c"># ------------------------------------------------------------------</span>
+</div>
 <div class="viewcode-block" id="MdiChild.keyPressEvent"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MdiChild.keyPressEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyEvent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Overrides to enable panning while dragging.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Overrides to enable panning while dragging.</span>
+
+<span class="sd">        :param QKeyEvent keyEvent: instance of |QKeyEvent|&quot;&quot;&quot;</span>
+
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keyEvent</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QKeyEvent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">keyEvent</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Space</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">keyEvent</span><span class="o">.</span><span class="n">isAutoRepeat</span><span class="p">()</span> <span class="ow">and</span>
@@ -151,7 +173,9 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">MdiChild</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyPressEvent</span><span class="p">(</span><span class="n">keyEvent</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="MdiChild.keyReleaseEvent"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MdiChild.keyReleaseEvent">[docs]</a>    <span class="k">def</span> <span class="nf">keyReleaseEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyEvent</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Overrides to disable panning while dragging.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Overrides to disable panning while dragging.</span>
+
+<span class="sd">        :param QKeyEvent keyEvent: instance of |QKeyEvent|&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keyEvent</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QKeyEvent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">keyEvent</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Space</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">keyEvent</span><span class="o">.</span><span class="n">isAutoRepeat</span><span class="p">()</span> <span class="ow">and</span>
@@ -162,30 +186,10 @@
             <span class="n">keyEvent</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MdiChild</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">keyReleaseEvent</span><span class="p">(</span><span class="n">keyEvent</span><span class="p">)</span>
 
-    <span class="c"># ------------------------------------------------------------------</span>
-</div>
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="MdiChild.currentFile"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MdiChild.currentFile">[docs]</a>    <span class="k">def</span> <span class="nf">currentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get current filename.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currentFile</span>
-
-    <span class="c"># ------------------------------------------------------------------</span>
-</div>
-    <span class="k">def</span> <span class="nf">userFriendlyCurrentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_currentFile</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">strippedName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentFile</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">setCurrentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_currentFile</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFileInfo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">canonicalFilePath</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_isUntitled</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">userFriendlyCurrentFile</span><span class="p">())</span>
-
 <span class="c"># ====================================================================</span>
-</div>
+</div></div>
 <div class="viewcode-block" id="MDIImageViewerWindow"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow">[docs]</a><span class="k">class</span> <span class="nc">MDIImageViewerWindow</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;View multiple images with optionally synchonized zooming &amp; panning.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Views multiple images with optionally synchonized zooming &amp; panning.&quot;&quot;&quot;</span>
 
     <span class="n">MaxRecentFiles</span> <span class="o">=</span> <span class="mi">10</span>
 
@@ -213,6 +217,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_recentFileMapper</span><span class="o">.</span><span class="n">mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">openRecentFile</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">createActions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_activateSubWindowSystemMenuAct</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">createMenus</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateMenus</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">createStatusBar</span><span class="p">()</span>
@@ -220,12 +226,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">readSettings</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateStatusBar</span><span class="p">()</span>
 
+
         <span class="bp">self</span><span class="o">.</span><span class="n">setUnifiedTitleAndToolBarOnMac</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
 
     <span class="c"># ------------------------------------------------------------------</span>
 
 <div class="viewcode-block" id="MDIImageViewerWindow.createMappedAction"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createMappedAction">[docs]</a>    <span class="k">def</span> <span class="nf">createMappedAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">shortcut</span><span class="p">,</span> <span class="n">methodName</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create action that is mapped via methodName to call.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Create |QAction| that is mapped via methodName to call.</span>
+
+<span class="sd">        :param icon: icon associated with |QAction|</span>
+<span class="sd">        :type icon: |QIcon| or None</span>
+<span class="sd">        :param str text: the |QAction| descriptive text</span>
+<span class="sd">        :param QObject parent: the parent |QObject|</span>
+<span class="sd">        :param QKeySequence shortcut: the shortcut |QKeySequence|</span>
+<span class="sd">        :param str methodName: name of method to call when |QAction| is</span>
+<span class="sd">                               triggered</span>
+<span class="sd">        :rtype: |QAction|&quot;&quot;&quot;</span>
+        
         <span class="k">if</span> <span class="n">icon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">action</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QAction</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span>
                                    <span class="n">shortcut</span><span class="o">=</span><span class="n">shortcut</span><span class="p">,</span>
@@ -466,7 +483,7 @@
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.updateMenus"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.updateMenus">[docs]</a>    <span class="k">def</span> <span class="nf">updateMenus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update menus.&quot;&quot;&quot;</span>
-        <span class="n">hasMdiChild</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">hasMdiChild</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_scrollMenu</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">hasMdiChild</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_zoomMenu</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">hasMdiChild</span><span class="p">)</span>
@@ -503,7 +520,6 @@
 <div class="viewcode-block" id="MDIImageViewerWindow.updateWindowMenu"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.updateWindowMenu">[docs]</a>    <span class="k">def</span> <span class="nf">updateWindowMenu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update the Window menu.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_windowMenu</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_windowMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_activateSubWindowSystemMenuAct</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_windowMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_closeAct</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_windowMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_closeAllAct</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_windowMenu</span><span class="o">.</span><span class="n">addSeparator</span><span class="p">()</span>
@@ -520,15 +536,26 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">window</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">windows</span><span class="p">):</span>
             <span class="n">child</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
 
-            <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">userFriendlyCurrentFile</span><span class="p">())</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">userFriendlyCurrentFile</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
                 <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="n">text</span>
 
             <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_windowMenu</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
             <span class="n">action</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-            <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">child</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">())</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="n">child</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">)</span>
             <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windowMapper</span><span class="o">.</span><span class="n">map</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_windowMapper</span><span class="o">.</span><span class="n">setMapping</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="MDIImageViewerWindow.createStatusBarLabel"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createStatusBarLabel">[docs]</a>    <span class="k">def</span> <span class="nf">createStatusBarLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stretch</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create status bar label.</span>
+
+<span class="sd">        :param int stretch: stretch factor</span>
+<span class="sd">        :rtype: |QLabel|&quot;&quot;&quot;</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">setFrameStyle</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Panel</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Sunken</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">stretch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">label</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.createStatusBar"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createStatusBar">[docs]</a>    <span class="k">def</span> <span class="nf">createStatusBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create status bar.&quot;&quot;&quot;</span>
@@ -541,23 +568,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_sbLabelZoom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createStatusBarLabel</span><span class="p">()</span>
 
         <span class="n">statusBar</span><span class="o">.</span><span class="n">showMessage</span><span class="p">(</span><span class="s">&quot;Ready&quot;</span><span class="p">)</span>
+
+    <span class="c"># ------------------------------------------------------------------</span>
 </div>
-<div class="viewcode-block" id="MDIImageViewerWindow.createStatusBarLabel"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createStatusBarLabel">[docs]</a>    <span class="k">def</span> <span class="nf">createStatusBarLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stretch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Sunken</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create status bar label.&quot;&quot;&quot;</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">()</span>
-        <span class="n">label</span><span class="o">.</span><span class="n">setFrameStyle</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Panel</span> <span class="o">|</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QFrame</span><span class="o">.</span><span class="n">Sunken</span><span class="p">)</span>
-        <span class="n">label</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">stretch</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">label</span>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="MDIImageViewerWindow.activeMdiChild"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.activeMdiChild">[docs]</a>    <span class="k">def</span> <span class="nf">activeMdiChild</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get active MDI child (:class:`MdiChild` or *None*).&quot;&quot;&quot;</span>
+        <span class="n">activeSubWindow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">activeSubWindow</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">activeSubWindow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">activeSubWindow</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">None</span>
 
     <span class="c"># ------------------------------------------------------------------</span>
 
     <span class="c">#overriden methods</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.closeEvent"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.closeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Handle close action.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Overrides close event to save application settings.</span>
+
+<span class="sd">        :param QEvent event: instance of |QEvent|&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">closeAllSubWindows</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">:</span>
             <span class="n">event</span><span class="o">.</span><span class="n">ignore</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">writeSettings</span><span class="p">()</span>
@@ -567,20 +598,23 @@
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.mappedImageViewerAction"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.mappedImageViewerAction">[docs]</a>    <span class="k">def</span> <span class="nf">mappedImageViewerAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">methodName</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Perform action mapped to ImageViewer methodName.&quot;&quot;&quot;</span>
-        <span class="n">activeViewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;Perform action mapped to :class:`imageviewer.ImageViewer`</span>
+<span class="sd">        methodName.</span>
+
+<span class="sd">        :param str methodName: method to call&quot;&quot;&quot;</span>
+        <span class="n">activeViewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">activeViewer</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">methodName</span><span class="p">)):</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="n">activeViewer</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">methodName</span><span class="p">))()</span>
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.toggleSynchPan"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.toggleSynchPan">[docs]</a>    <span class="k">def</span> <span class="nf">toggleSynchPan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Toggle synch subwindow panning.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Toggle synchronized subwindow panning.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synchPanAct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">synchPan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">synchPan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">)</span>
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.panChanged"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.panChanged">[docs]</a>    <span class="k">def</span> <span class="nf">panChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Synchronize subwindow panning.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Synchronize subwindow pans.&quot;&quot;&quot;</span>
         <span class="n">mdiChild</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
         <span class="k">while</span> <span class="n">mdiChild</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">mdiChild</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MdiChild</span><span class="p">:</span>
             <span class="n">mdiChild</span> <span class="o">=</span> <span class="n">mdiChild</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
@@ -589,13 +623,13 @@
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.toggleSynchZoom"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.toggleSynchZoom">[docs]</a>    <span class="k">def</span> <span class="nf">toggleSynchZoom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Toggle synch subwindow zoom.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Toggle synchronized subwindow zooming.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synchZoomAct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">synchZoom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">synchZoom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">)</span>
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.zoomChanged"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.zoomChanged">[docs]</a>    <span class="k">def</span> <span class="nf">zoomChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Synchronize subwindow zooming.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Synchronize subwindow zooms.&quot;&quot;&quot;</span>
         <span class="n">mdiChild</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synchZoomAct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">synchZoom</span><span class="p">(</span><span class="n">mdiChild</span><span class="p">)</span>
@@ -610,7 +644,9 @@
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.openRecentFile"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.openRecentFile">[docs]</a>    <span class="k">def</span> <span class="nf">openRecentFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Open a recent file.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Open a recent file.</span>
+
+<span class="sd">        :param str filename: filename to view&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loadFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
@@ -634,7 +670,7 @@
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.toggleScrollbars"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.toggleScrollbars">[docs]</a>    <span class="k">def</span> <span class="nf">toggleScrollbars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Toggle subwindow scrollbars.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Toggle subwindow scrollbar visibility.&quot;&quot;&quot;</span>
         <span class="n">checked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_showScrollbarsAct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span>
 
         <span class="n">windows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">subWindowList</span><span class="p">()</span>
@@ -644,7 +680,7 @@
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.toggleStatusbar"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.toggleStatusbar">[docs]</a>    <span class="k">def</span> <span class="nf">toggleStatusbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Toggle subwindow scrollbars.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Toggle status bar visibility.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_showStatusbarAct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">()</span>
@@ -657,20 +693,27 @@
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMdiSubWindow</span><span class="p">)</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.subWindowActivated"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.subWindowActivated">[docs]</a>    <span class="k">def</span> <span class="nf">subWindowActivated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Handle MDI subwindow activated signal.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Handle |QMdiSubWindow| activated signal.</span>
+
+<span class="sd">        :param |QMdiSubWindow| window: |QMdiSubWindow| that was just</span>
+<span class="sd">                                       activated&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">updateStatusBar</span><span class="p">()</span>
 </div>
     <span class="nd">@QtCore.pyqtSlot</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMdiSubWindow</span><span class="p">)</span>
 <div class="viewcode-block" id="MDIImageViewerWindow.setActiveSubWindow"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.setActiveSubWindow">[docs]</a>    <span class="k">def</span> <span class="nf">setActiveSubWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set active MDI subwindow.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Set active |QMdiSubWindow|.</span>
+<span class="sd">        </span>
+<span class="sd">        :param |QMdiSubWindow| window: |QMdiSubWindow| to activate &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">window</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">setActiveSubWindow</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
 
     <span class="c"># ------------------------------------------------------------------</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.loadFile"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.loadFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Load filename into new MdiChild window.&quot;&quot;&quot;</span>
-        <span class="n">activeMdiChild</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;Load filename into new :class:`MdiChild` window.</span>
+
+<span class="sd">        :param str filename: filename to load&quot;&quot;&quot;</span>
+        <span class="n">activeMdiChild</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">setOverrideCursor</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">WaitCursor</span><span class="p">)</span>
         <span class="n">pixmap</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">restoreOverrideCursor</span><span class="p">()</span>
@@ -699,7 +742,7 @@
 <div class="viewcode-block" id="MDIImageViewerWindow.updateStatusBar"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.updateStatusBar">[docs]</a>    <span class="k">def</span> <span class="nf">updateStatusBar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update status bar.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_showStatusbarAct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
-        <span class="n">imageViewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span><span class="p">()</span>
+        <span class="n">imageViewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeMdiChild</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">imageViewer</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sbLabelName</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sbLabelSize</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
@@ -749,15 +792,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_sbLabelDate</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sbLabelZoom</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MDIImageViewerWindow.activeMdiChild"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.activeMdiChild">[docs]</a>    <span class="k">def</span> <span class="nf">activeMdiChild</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return active ImageViewer.&quot;&quot;&quot;</span>
-        <span class="n">activeSubWindow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">activeSubWindow</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">activeSubWindow</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">activeSubWindow</span><span class="o">.</span><span class="n">widget</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">None</span>
-</div>
 <div class="viewcode-block" id="MDIImageViewerWindow.createMdiChild"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.createMdiChild">[docs]</a>    <span class="k">def</span> <span class="nf">createMdiChild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixmap</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create new ImageViewer for pixmap.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Create new :class:`MdiChild` for pixmap.</span>
+
+<span class="sd">        :param pixmap: |QPixmap| to display in :class:`MdiChild`</span>
+<span class="sd">        :type pixmap: |QPixmap| or None</span>
+<span class="sd">        :param filename: |QPixmap| filename</span>
+<span class="sd">        :type filename: str or None</span>
+<span class="sd">        :rtype: :class:`MdiChild`&quot;&quot;&quot;</span>
+
         <span class="n">child</span> <span class="o">=</span> <span class="n">MdiChild</span><span class="p">(</span><span class="n">pixmap</span><span class="p">,</span>
                          <span class="n">filename</span><span class="p">,</span>
                          <span class="s">&quot;Child </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mdiArea</span><span class="o">.</span><span class="n">subWindowList</span><span class="p">())</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
@@ -777,7 +820,9 @@
             <span class="n">QtGui</span><span class="o">.</span><span class="n">qApp</span><span class="o">.</span><span class="n">setLayoutDirection</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">LeftToRight</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.synchPan"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.synchPan">[docs]</a>    <span class="k">def</span> <span class="nf">synchPan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fromViewer</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Synch panning of all subwindowws to same as fromViewer.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Synch panning of all subwindowws to the same as *fromViewer*.</span>
+
+<span class="sd">        :param fromViewer: :class:`MdiChild` that initiated synching&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fromViewer</span><span class="p">,</span> <span class="n">MdiChild</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">fromViewer</span><span class="p">:</span>
             <span class="k">return</span>
@@ -794,7 +839,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_handlingScrollChangedSignal</span> <span class="o">=</span> <span class="bp">False</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.synchZoom"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.synchZoom">[docs]</a>    <span class="k">def</span> <span class="nf">synchZoom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fromViewer</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Synch zoom of all subwindowws to same as fromViewer.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Synch zoom of all subwindowws to the same as *fromViewer*.</span>
+<span class="sd">        </span>
+<span class="sd">        :param fromViewer: :class:`MdiChild` that initiated synching&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">fromViewer</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">newZoomFactor</span> <span class="o">=</span> <span class="n">fromViewer</span><span class="o">.</span><span class="n">zoomFactor</span>
@@ -807,7 +854,10 @@
     <span class="c"># ------------------------------------------------------------------</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.saveDialogState"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.saveDialogState">[docs]</a>    <span class="k">def</span> <span class="nf">saveDialogState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialog</span><span class="p">,</span> <span class="n">groupName</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save dialog state, position &amp; size.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Save dialog state, position &amp; size.</span>
+
+<span class="sd">        :param |QDialog| dialog: dialog to save state of</span>
+<span class="sd">        :param str groupName: |QSettings| group name&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dialog</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">)</span>
 
         <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">()</span>
@@ -820,7 +870,9 @@
         <span class="n">settings</span><span class="o">.</span><span class="n">endGroup</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.restoreDialogState"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.restoreDialogState">[docs]</a>    <span class="k">def</span> <span class="nf">restoreDialogState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialog</span><span class="p">,</span> <span class="n">groupName</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Restore dialog state, position &amp; size.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Restore dialog state, position &amp; size.</span>
+
+<span class="sd">        :param str groupName: |QSettings| group name&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dialog</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">)</span>
 
         <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">()</span>
@@ -871,7 +923,11 @@
             <span class="n">toBool</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">SETTING_SYNCHPAN</span><span class="p">,</span> <span class="bp">True</span><span class="p">)))</span>
 </div>
 <div class="viewcode-block" id="MDIImageViewerWindow.updateRecentFileSettings"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.MDIImageViewerWindow.updateRecentFileSettings">[docs]</a>    <span class="k">def</span> <span class="nf">updateRecentFileSettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update recent file list setting.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Update recent file list setting.</span>
+
+<span class="sd">        :param str filename: filename to add or remove from recent file</span>
+<span class="sd">                             list</span>
+<span class="sd">        :param bool delete: if True then filename removed, otherwise added&quot;&quot;&quot;</span>
         <span class="n">settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">()</span>
         <span class="n">files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">SETTING_RECENTFILELIST</span><span class="p">,</span> <span class="p">[]))</span>
 
@@ -889,7 +945,7 @@
 
 <span class="c"># ====================================================================</span>
 </div></div>
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../mdiimageviewer.html#mdiimageviewer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Run MDI Image Viewer application.&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -905,12 +961,38 @@
 
     <span class="n">mainWin</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
-</div>
+
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
           </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../contents.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1  Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementation.html">2  Implementation Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../questions.html">3  Remaining Implementation Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">4  Modules Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todolist.html">5  To Do List</a></li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -924,11 +1006,22 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">PyQt MDI Image Viewer v0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="../contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+
           <li><a href="index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
+    <a href="http://creativecommons.org/licenses/by/3.0/us/" >
+      <img src="../_static/creativecommons-80x15.png"
+	   align="absmiddle" border="0" alt="Creative Commons License"/>
+     </a>
+    <a href="http://creativecommons.org/licenses/by/3.0/us/">
+     Creative Commons Attribution 3.0 
+    </a> License.&nbsp;
+      Last updated on Nov 02, 2010.&nbsp;
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
     </div>
   </body>

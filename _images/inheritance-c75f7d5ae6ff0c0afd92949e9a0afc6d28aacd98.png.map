@@ -1,0 +1,5 @@
+<map id="inheritancef8d5f48543" name="inheritancef8d5f48543">
+<area shape="rect" id="node18" href="#imageviewer.ImageViewer" title="imageviewer.ImageViewer" alt="" coords="256,379,424,405"/>
+<area shape="rect" id="node21" href="#imageviewer.MainWindow" title="imageviewer.MainWindow" alt="" coords="448,379,616,405"/>
+<area shape="rect" id="node15" href="#imageviewer.SynchableGraphicsView" title="imageviewer.SynchableGraphicsView" alt="" coords="5,528,240,555"/>
+</map>

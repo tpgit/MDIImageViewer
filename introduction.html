@@ -1,0 +1,191 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1 Introduction &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/github.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="index.html" />
+    <link rel="next" title="2 Implementation Notes" href="implementation.html" />
+    <link rel="prev" title="PyQt MDI Image Viewer v0.1 documentation" href="contents.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="2 Implementation Notes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contents.html" title="PyQt MDI Image Viewer v0.1 documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>1  Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation">
+<h2>1.1  Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>I am in the process of creating an open-source PyQt app that explores
+the use of various image processing operations (using the Leptonica C
+library <a class="reference external" href="http://www.leptonica.com">http://www.leptonica.com</a> as the underlying image processing
+engine). One of my initial goals was to be able to view multiple
+<a class="reference external" href="http://doc.qt.nokia.com/latest/qpixmap.html">QPixmap</a>s while optionally keeping their view&#8217;s pan and zoom values
+synchronized (so you can easily compare the results of the image
+processing operations).</p>
+<p>As a first step I&#8217;ve managed to come up with the application described
+in these pages, but I&#8217;d like to make sure I am following PyQt &amp; Python
+&#8220;good practices&#8221; before going on to create my &#8220;real&#8221; application. I&#8217;d
+appreciate any comments on the overall architecture &amp; implementation. It
+could very well be that I should be using <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/dip/intro">dip</a> even though
+it&#8217;s pretty new? (As far as Python style goes let me warn you that I use
+camelCase naming and prefix &#8220;private&#8221; data member names with a <tt class="docutils literal"><span class="pre">_</span></tt>.)</p>
+<p>You can send a message to <tt class="docutils literal"><span class="pre">tpgit</span></tt> via GitHub, leave comments on the
+Project&#8217;s <a class="reference external" href="http://github.com/tpgit/MDIImageViewer/issues">issues</a>
+page, or post them to the <a class="reference external" href="mailto:pyqt&#37;&#52;&#48;riverbankcomputing&#46;com">PyQt Mailing List</a> or <a class="reference external" href="http://lists.trolltech.com/mailman/listinfo/qt-interest">Qt Mailing List</a> with a
+subject containing &#8220;PyQt MDI Image Viewer&#8221;.</p>
+<div class="admonition-todo admonition " id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Incorporate suggestions from feedback.</p>
+</div>
+</div>
+<div class="section" id="prequisites">
+<h2>1.2  Prequisites<a class="headerlink" href="#prequisites" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://python.org/download/releases/">Python 2.6</a> is required (it
+will probably run under Python 2.7 and Python 3). For Windows I highly
+recommend <a class="reference external" href="http://www.activestate.com/activepython/downloads">ActiveState Python</a>.</p>
+<p>You&#8217;ll also need <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download">PyQt 4.x</a> for the
+corresponding version of Python.</p>
+<p>If you want to regenerate the documentation from the <span class="filesystem">.rst</span> sources
+you&#8217;ll need <a class="reference external" href="http://sphinx.pocoo.org/index.html">Sphinx</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2>1.3  Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>You can either download a tarball or zipfile from <a class="reference external" href="http://github.com/tpgit/MDIImageViewer/archives/master">here</a> or clone the
+<a class="reference external" href="http://github.com/tpgit/MDIImageViewer">repository</a> using <a class="reference external" href="http://git-scm.com/">git</a>.</p>
+</div>
+<div class="section" id="usage">
+<h2>1.4  Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To use the MDI Image Viewer open up a Command Prompt, switch to the main
+MDI Image Viewer directory, and enter:</p>
+<div class="highlight-python"><pre>python mdiimageviewer.py</pre>
+</div>
+<p>If you want to test the single Image Viewer:</p>
+<div class="highlight-python"><pre>python imageviewer.py imagefilename</pre>
+</div>
+<p>this will print out debugging messages to <tt class="docutils literal"><span class="pre">stdout</span></tt> as various
+<tt class="docutils literal"><span class="pre">signals</span></tt> are generated.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="contents.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">1  Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#motivation">1.1  Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prequisites">1.2  Prequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">1.3  Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">1.4  Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">2  Implementation Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="questions.html">3  Remaining Implementation Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">4  Modules Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todolist.html">5  To Do List</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/introduction.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="2 Implementation Notes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contents.html" title="PyQt MDI Image Viewer v0.1 documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+    <a href="http://creativecommons.org/licenses/by/3.0/us/" >
+      <img src="_static/creativecommons-80x15.png"
+	   align="absmiddle" border="0" alt="Creative Commons License"/>
+     </a>
+    <a href="http://creativecommons.org/licenses/by/3.0/us/">
+     Creative Commons Attribution 3.0 
+    </a> License.&nbsp;
+      Last updated on Nov 02, 2010.&nbsp;
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
+    </div>
+  </body>
+</html>

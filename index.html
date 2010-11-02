@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,8 +8,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to PyQt MDI Image Viewer’s documentation! &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <title>PyQt MDI Image Viewer &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/github.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -22,8 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="#" />
-    <link rel="next" title="1 imageviewer – Image viewer with panning and zooming" href="imageviewer.html" /> 
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="#" /> 
   </head>
   <body>
     <div class="related">
@@ -35,30 +36,88 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="imageviewer.html" title="1 imageviewer – Image viewer with panning and zooming"
-             accesskey="N">next</a> |</li>
-        <li><a href="#">PyQt MDI Image Viewer v0.1 documentation</a> &raquo;</li> 
+        <li><a href="#">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+ 
       </ul>
-    </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Welcome to PyQt MDI Image Viewer&#8217;s documentation!</a><ul>
-</ul>
-</li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
+    </div>  
 
-  <h4>Next topic</h4>
-  <p class="topless"><a href="imageviewer.html"
-                        title="next chapter">1  imageviewer &#8211; Image viewer with panning and zooming</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pyqt-mdi-image-viewer">
+<h1>PyQt MDI Image Viewer<a class="headerlink" href="#pyqt-mdi-image-viewer" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="_images/mdi-overlapping.png"><img align="right" alt="Screenshot of PyQt MDI Image Viewer with overlapping windows" class="align-right" src="_images/mdi-overlapping.png" style="width: 208.0px; height: 166.5px;" /></a>
+<p>This is the documentation for the PyQt based <a class="reference external" href="http://github.com/tpgit/MDIImageViewer">MDI (Multiple Document
+Interface) Image Viewer</a> which
+supports optional zooming and panning synchronization of multiple
+windows. I&#8217;ve tested it under Windows XP using <a class="reference external" href="http://www.activestate.com/activepython/downloads">ActiveState Python 2.6.4</a> and PyQt 4.7.7 and
+<a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt 4.8</a>.</p>
+<p>As you can see from the thumbnail images on the right (click the
+thumbnails to see larger versions), the MDI Image Viewer supports
+standard tiled or independent subwindows. Each subwindow can be forced
+to have the same zoom factor and position (helpful when trying to
+examine the exact changes caused by image processing
+operations). Alternatively, the subwindows can be scaled independently
+and show different areas.</p>
+<p>Holding down the <tt class="kbd docutils literal"><span class="pre">&lt;Space&gt;</span></tt> key lets you pan a subwindow by dragging
+the mouse.</p>
+<a class="reference external image-reference" href="_images/mdi-tiled.png"><img align="right" alt="Screenshot of PyQt MDI Image Viewer with tiled windows" class="align-right" src="_images/mdi-tiled.png" style="width: 208.0px; height: 166.5px;" /></a>
+<p>In and of itself, the MDI Image Viewer is admittedly not particularly
+useful. It was written mainly as a component for an upcoming image
+processing application, but also as an exercise in &#8220;correct&#8221; application
+development using the following:</p>
+<ul>
+<li><p class="first"><a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt</a>
+programming</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://qt.nokia.com/">Qt</a> programming</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://python.org/">Python</a> programming</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://sphinx.pocoo.org/index.html">Sphinx</a> documentation</p>
+</li>
+<li><p class="first">Project hosting on <a class="reference external" href="http://github.com/">github</a></p>
+</li>
+</ul>
+<a class="reference external image-reference" href="_images/mdi-unsynched.png"><img align="right" alt="Screenshot of PyQt MDI Image Viewer with unsynchronized windows" class="align-right" src="_images/mdi-unsynched.png" style="width: 208.0px; height: 166.5px;" /></a>
+<p>See the <a class="reference internal" href="implementation.html"><em>Implementation Notes</em></a> page for detailed
+descriptions of the various techniques demonstrated by this
+project.</p>
+<p>Also included is detailed documentation of the <a class="reference internal" href="modules.html"><em>Python modules</em></a>.</p>
+<p>You can easily start your own PyQt application by copying the files from
+the <a class="reference external" href="http://github.com/tpgit/MDIImageViewer/archives/master">github repository</a>.</p>
+<p>For more information, continue on to the complete <a class="reference internal" href="contents.html"><em>Documentation</em></a>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Download</h3>
+<p>Current version: <b>0.1</b></p>
+<p>Get it from <a href="http://github.com/tpgit/MDIImageViewer/archives/master">
+github</a>.
+
+<h3>Questions? Suggestions?</h3>
+
+<p>Send a message to <a href="http://github.com/tpgit/">tpgit</a>
+on <a href="http://github.com/">GitHub</a> (you have to first create a
+free account).</p>
+
+<p>You can also open an issue
+<a href="http://github.com/tpgit/MDIImageViewer/issues">here</a>,</p>
+
+<p>or post a message to
+the <a href="http://www.riverbankcomputing.co.uk/mailman/listinfo/pyqt">PyQt
+Mailing List</a>
+or <a href="http://lists.trolltech.com/mailman/listinfo/qt-interest">Qt
+Mailing List</a> with a subject containing "PyQt MDI Image Viewer".</p>
+
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -74,35 +133,6 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
-  <div class="section" id="welcome-to-pyqt-mdi-image-viewer-s-documentation">
-<h1>Welcome to PyQt MDI Image Viewer&#8217;s documentation!<a class="headerlink" href="#welcome-to-pyqt-mdi-image-viewer-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="imageviewer.html">1  imageviewer &#8211; Image viewer with panning and zooming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdiimageviewer.html">2  mdiimageviewer &#8211; Synchable image viewers using MDI style interface</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
-</ul>
-</div>
-
-
-          </div>
-        </div>
-      </div>
       <div class="clearer"></div>
     </div>
     <div class="related">
@@ -114,13 +144,21 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="imageviewer.html" title="1 imageviewer – Image viewer with panning and zooming"
-             >next</a> |</li>
-        <li><a href="#">PyQt MDI Image Viewer v0.1 documentation</a> &raquo;</li> 
+        <li><a href="#">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
+        <li><a href="contents.html">v0.1 Documentation</a>
+          &raquo;</li>
+ 
       </ul>
     </div>
     <div class="footer">
+    <a href="http://creativecommons.org/licenses/by/3.0/us/" >
+      <img src="_static/creativecommons-80x15.png"
+	   align="absmiddle" border="0" alt="Creative Commons License"/>
+     </a>
+    <a href="http://creativecommons.org/licenses/by/3.0/us/">
+     Creative Commons Attribution 3.0 
+    </a> License.&nbsp;
+      Last updated on Nov 02, 2010.&nbsp;
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.4.
     </div>
   </body>

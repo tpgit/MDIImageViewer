@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Search &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
+    <title>3 Remaining Implementation Questions &mdash; PyQt MDI Image Viewer v0.1 documentation</title>
     <link rel="stylesheet" href="_static/github.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,14 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/searchtools.js"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <link rel="top" title="PyQt MDI Image Viewer v0.1 documentation" href="index.html" />
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-   
-
+    <link rel="next" title="4 Modules Reference" href="modules.html" />
+    <link rel="prev" title="2 Implementation Notes" href="implementation.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,6 +38,12 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="4 Modules Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="2 Implementation Notes"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
         <li><a href="contents.html">v0.1 Documentation</a>
           &raquo;</li>
@@ -54,29 +56,30 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1 id="search-documentation">Search</h1>
-  <div id="fallback" class="admonition warning">
-  <script type="text/javascript">$('#fallback').hide();</script>
-  <p>
-    Please activate JavaScript to enable the search
-    functionality.
-  </p>
-  </div>
-  <p>
-    From here you can search these documents. Enter your search
-    words into the box below and click "search". Note that the search
-    function will automatically search for all of the words. Pages
-    containing fewer words won't appear in the result list.
-  </p>
-  <form action="" method="get">
-    <input type="text" name="q" value="" />
-    <input type="submit" value="search" />
-    <span id="search-progress" style="padding-left: 10px"></span>
-  </form>
-  
-  <div id="search-results">
-  
-  </div>
+  <div class="section" id="remaining-implementation-questions">
+<h1>3  Remaining Implementation Questions<a class="headerlink" href="#remaining-implementation-questions" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">I had to specially check for <a class="reference external" href="http://doc.qt.nokia.com/latest/qsettings.html">QSettings</a> boolean
+values and convert them manually to <tt class="docutils literal"><span class="pre">bool</span></tt> (since they are
+currently stored as strings rather than something like <tt class="docutils literal"><span class="pre">&#64;Bool</span></tt>). Is
+this really necessary or the correct method when using <a class="reference external" href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#id12">QVariant API
+2</a>?</p>
+</li>
+<li><p class="first">For some reason, if the MDI subwindow(s) are tiled upon exit, the
+application window position &amp; state are not correctly restored when
+the app is restarted?</p>
+</li>
+<li><p class="first">How do you make MDI subwindows with a shorter title bar that takes up
+less vertical screen space? Setting the WindowFlags to
+<tt class="docutils literal"><span class="pre">QtCore.Qt.Tool</span></tt> results in a Tool-like window but it then is no
+longer a MDI subwindow but rather floats outside of the main window.</p>
+</li>
+<li><p class="first">How can I specify <tt class="kbd docutils literal"><span class="pre">NumPad</span> <span class="pre">/</span></tt>, <tt class="kbd docutils literal"><span class="pre">NumPad</span> <span class="pre">*</span></tt>, and <tt class="kbd docutils literal"><span class="pre">NumPad</span>
+<span class="pre">5</span></tt> as keyboard shortcuts?</p>
+</li>
+</ol>
+</div>
+
 
           </div>
         </div>
@@ -84,14 +87,32 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
 <h3><a href="contents.html">Table Of Contents</a></h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1  Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementation.html">2  Implementation Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="questions.html">3  Remaining Implementation Questions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">3  Remaining Implementation Questions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">4  Modules Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="todolist.html">5  To Do List</a></li>
 </ul>
 
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/questions.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -105,6 +126,12 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="4 Modules Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="2 Implementation Notes"
+             >previous</a> |</li>
         <li><a href="index.html">PyQt MDI Image Viewer home</a>&nbsp;|&nbsp;</li>
         <li><a href="contents.html">v0.1 Documentation</a>
           &raquo;</li>
