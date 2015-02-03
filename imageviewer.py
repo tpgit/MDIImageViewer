@@ -12,10 +12,10 @@ This module contains the following classes:
 
 # ====================================================================
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from future_builtins import *
+#from __future__ import division
+#from __future__ import print_function
+#from __future__ import unicode_literals
+#from future_builtins import *
 
 # This is only needed for Python v2 but is harmless for Python v3.
 import sip
@@ -33,11 +33,11 @@ import os
 import platform
 import sys
 
-from PyQt4 import (QtCore, QtGui)
+from PyQt5 import (QtCore, QtGui,  QtWidgets)
 
 # ====================================================================
 
-class SynchableGraphicsView(QtGui.QGraphicsView):
+class SynchableGraphicsView(QtWidgets.QGraphicsView):
     """|QGraphicsView| that can synchronize panning & zooming of multiple
     instances.
 
@@ -157,7 +157,8 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
         :param QWheelEvent wheelEvent: instance of |QWheelEvent|"""
         assert isinstance(wheelEvent, QtGui.QWheelEvent)
         if wheelEvent.modifiers() & QtCore.Qt.ControlModifier:
-            self.wheelNotches.emit(wheelEvent.delta() / 240.0)
+            data = wheelEvent.angleDelta().y() / 240.0
+            self.wheelNotches.emit(data)
             wheelEvent.accept()
         else:
             super(SynchableGraphicsView, self).wheelEvent(wheelEvent)
@@ -279,7 +280,7 @@ class SynchableGraphicsView(QtGui.QGraphicsView):
         print("%s%5.3f %5.3f %5.3f" % (padding, t.m31(), t.m32(), t.m33()))
 
 
-class ImageViewer(QtGui.QFrame):
+class ImageViewer(QtWidgets.QFrame):
     """Image Viewer than can pan & zoom images (|QPixmap|\ s)."""
 
     def __init__(self, pixmap=None, name=None):
@@ -288,21 +289,21 @@ class ImageViewer(QtGui.QFrame):
         :param name: name associated with this ImageViewer
         :type name: str or None"""
         super(ImageViewer, self).__init__()
-        #self.setFrameStyle(QtGui.QFrame.Sunken | QtGui.QFrame.StyledPanel)
-        self.setFrameStyle(QtGui.QFrame.NoFrame)
+        self.setFrameStyle(QtWidgets.QFrame.Sunken | QtWidgets.QFrame.StyledPanel)
+        #self.setFrameStyle(QtWidgets.QFrame.NoFrame)
 
         self._relativeScale = 1.0 #scale relative to other ImageViewer instances
         self._zoomFactorDelta = 1.25
 
-        self._scene = QtGui.QGraphicsScene()
+        self._scene = QtWidgets.QGraphicsScene()
         self._view = SynchableGraphicsView(self._scene)
 
         self._view.setInteractive(False)
-        #self._view.setCacheMode(QtGui.QGraphicsView.CacheBackground)
-        self._view.setViewportUpdateMode(QtGui.QGraphicsView.MinimalViewportUpdate)
-        #self._view.setViewportUpdateMode(QtGui.QGraphicsView.SmartViewportUpdate)
-        #self._view.setTransformationAnchor(QtGui.QGraphicsView.NoAnchor)
-        self._view.setTransformationAnchor(QtGui.QGraphicsView.AnchorViewCenter)
+        #self._view.setCacheMode(QtWidgets.QGraphicsView.CacheBackground)
+        self._view.setViewportUpdateMode(QtWidgets.QGraphicsView.MinimalViewportUpdate)
+        #self._view.setViewportUpdateMode(QtWidgets.QGraphicsView.SmartViewportUpdate)
+        #self._view.setTransformationAnchor(QtWidgets.QGraphicsView.NoAnchor)
+        self._view.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorViewCenter)
 
         #pass along underlying signals
         self._scene.changed.connect(self.sceneChanged)
@@ -322,7 +323,8 @@ class ImageViewer(QtGui.QFrame):
         self._scene.setBackgroundBrush(QtGui.QBrush(backgroundPixmap))
         self._view.setRenderHint(QtGui.QPainter.SmoothPixmapTransform)
 
-        self._pixmapItem = QtGui.QGraphicsPixmapItem(scene=self._scene)
+        self._pixmapItem = QtWidgets.QGraphicsPixmapItem()
+        self._scene.addItem(self._pixmapItem)
         if pixmap:
             self.pixmap = pixmap
 
@@ -330,13 +332,13 @@ class ImageViewer(QtGui.QFrame):
                                    QtGui.QPen(QtGui.QColor("red")))
         rect.setZValue(1.0)
 
-        layout = QtGui.QGridLayout()
+        layout = QtWidgets.QGridLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         #layout.setSpacing(0)
 
-        self._label = QtGui.QLabel()
+        self._label = QtWidgets.QLabel()
         #self._label.setFrameStyle(QtGui.QFrame.Panel | QtGui.QFrame.Raised)
-        self._label.setFrameStyle(QtGui.QFrame.Panel)
+        self._label.setFrameStyle(QtWidgets.QFrame.Panel)
         self._label.setAutoFillBackground(True);
         self._label.setBackgroundRole(QtGui.QPalette.ToolTipBase)
         self.viewName = name
@@ -588,7 +590,7 @@ class ImageViewer(QtGui.QFrame):
 
 # ====================================================================
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     """Sample app to test the :class:`ImageViewer` class."""
 
     def __init__(self, pixmap):
