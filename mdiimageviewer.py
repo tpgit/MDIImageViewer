@@ -10,10 +10,10 @@ based on PyQt MDI.py example.
 
 # ====================================================================
 
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-from future_builtins import *
+#from __future__ import division
+#from __future__ import print_function
+#from __future__ import unicode_literals
+#from future_builtins import *
 
 # This is only needed for Python v2 but is harmless for Python v3.
 import sip
@@ -27,7 +27,7 @@ sip.setapi('QString', 2)
 
 # ====================================================================
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui,  QtWidgets
 
 import imageviewer
 import icons_rc
@@ -135,7 +135,7 @@ class MdiChild(imageviewer.ImageViewer):
 
 # ====================================================================
 
-class MDIImageViewerWindow(QtGui.QMainWindow):
+class MDIImageViewerWindow(QtWidgets.QMainWindow):
     """Views multiple images with optionally synchonized zooming & panning."""
 
     MaxRecentFiles = 10
@@ -146,17 +146,17 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         self._recentFileActions = []
         self._handlingScrollChangedSignal = False
 
-        self._mdiArea = QtGui.QMdiArea()
+        self._mdiArea = QtWidgets.QMdiArea()
         self._mdiArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self._mdiArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self._mdiArea.subWindowActivated.connect(self.subWindowActivated)
         self.setCentralWidget(self._mdiArea)
-        #self._mdiArea.setViewMode(QtGui.QMdiArea.TabbedView)
+        #self._mdiArea.setViewMode(QtWidgets.QMdiArea.TabbedView)
 
         self._mdiArea.subWindowActivated.connect(self.updateMenus)
 
         self._windowMapper = QtCore.QSignalMapper(self)
-        self._windowMapper.mapped[QtGui.QWidget].connect(self.setActiveSubWindow)
+        self._windowMapper.mapped[QtWidgets.QWidget].connect(self.setActiveSubWindow)
 
         self._actionMapper = QtCore.QSignalMapper(self)
         self._actionMapper.mapped[str].connect(self.mappedImageViewerAction)
@@ -191,11 +191,11 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         :rtype: |QAction|"""
 
         if icon is not None:
-            action = QtGui.QAction(icon, text, parent,
+            action = QtWidgets.QAction(icon, text, parent,
                                    shortcut=shortcut,
                                    triggered=self._actionMapper.map)
         else:
-            action = QtGui.QAction(text, parent,
+            action = QtWidgets.QAction(text, parent,
                                    shortcut=shortcut,
                                    triggered=self._actionMapper.map)
         self._actionMapper.setMapping(action, methodName)
@@ -204,50 +204,50 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     def createActions(self):
         """Create actions used in menus."""
         #File menu actions
-        self._openAct = QtGui.QAction(
+        self._openAct = QtWidgets.QAction(
             QtGui.QIcon(':/open.png'),
             "&Open...", self,
             shortcut=QtGui.QKeySequence.Open,
             statusTip="Open an existing file",
             triggered=self.open)
 
-        self._switchLayoutDirectionAct = QtGui.QAction(
+        self._switchLayoutDirectionAct = QtWidgets.QAction(
             "Switch &layout direction", self,
             triggered=self.switchLayoutDirection)
 
         #create dummy recent file actions
         for i in range(MDIImageViewerWindow.MaxRecentFiles):
             self._recentFileActions.append(
-                QtGui.QAction(self, visible=False,
+                QtWidgets.QAction(self, visible=False,
                               triggered=self._recentFileMapper.map))
 
-        self._exitAct = QtGui.QAction(
+        self._exitAct = QtWidgets.QAction(
             QtGui.QIcon(':/exit.png'),
             "E&xit", self,
             shortcut=QtGui.QKeySequence.Quit,
             statusTip="Exit the application",
-            triggered=QtGui.qApp.closeAllWindows)
+            triggered=QtWidgets.qApp.closeAllWindows)
 
         #View menu actions
-        self._showScrollbarsAct = QtGui.QAction(
+        self._showScrollbarsAct = QtWidgets.QAction(
             "&Scrollbars", self,
             checkable=True,
             statusTip="Toggle display of subwindow scrollbars",
             triggered=self.toggleScrollbars)
 
-        self._showStatusbarAct = QtGui.QAction(
+        self._showStatusbarAct = QtWidgets.QAction(
             "S&tatusbar", self,
             checkable=True,
             statusTip="Toggle display of statusbar",
             triggered=self.toggleStatusbar)
 
-        self._synchZoomAct = QtGui.QAction(
+        self._synchZoomAct = QtWidgets.QAction(
             "Synch &Zoom", self,
             checkable=True,
             statusTip="Synch zooming of subwindows",
             triggered=self.toggleSynchZoom)
 
-        self._synchPanAct = QtGui.QAction(
+        self._synchPanAct = QtWidgets.QAction(
             "Synch &Pan", self,
             checkable=True,
             statusTip="Synch panning of subwindows",
@@ -287,7 +287,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
             ]
 
         #zoom menu actions
-        separatorAct = QtGui.QAction(self)
+        separatorAct = QtWidgets.QAction(self)
         separatorAct.setSeparator(True)
 
         self._zoomActions = [
@@ -337,13 +337,13 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
            ]
 
         #Window menu actions
-        self._activateSubWindowSystemMenuAct = QtGui.QAction(
+        self._activateSubWindowSystemMenuAct = QtWidgets.QAction(
             "Activate &System Menu", self,
             shortcut="Ctrl+ ",
             statusTip="Activate subwindow System Menu",
             triggered=self.activateSubwindowSystemMenu)
 
-        self._closeAct = QtGui.QAction(
+        self._closeAct = QtWidgets.QAction(
             "Cl&ose", self,
             shortcut=QtGui.QKeySequence.Close,
             shortcutContext=QtCore.Qt.WidgetShortcut,
@@ -351,47 +351,47 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
             statusTip="Close the active window",
             triggered=self._mdiArea.closeActiveSubWindow)
 
-        self._closeAllAct = QtGui.QAction(
+        self._closeAllAct = QtWidgets.QAction(
             "Close &All", self,
             statusTip="Close all the windows",
             triggered=self._mdiArea.closeAllSubWindows)
 
-        self._tileAct = QtGui.QAction(
+        self._tileAct = QtWidgets.QAction(
             "&Tile", self,
             statusTip="Tile the windows",
             triggered=self._mdiArea.tileSubWindows)
 
-        self._cascadeAct = QtGui.QAction(
+        self._cascadeAct = QtWidgets.QAction(
             "&Cascade", self,
             statusTip="Cascade the windows",
             triggered=self._mdiArea.cascadeSubWindows)
 
-        self._nextAct = QtGui.QAction(
+        self._nextAct = QtWidgets.QAction(
             "Ne&xt", self,
             shortcut=QtGui.QKeySequence.NextChild,
             statusTip="Move the focus to the next window",
             triggered=self._mdiArea.activateNextSubWindow)
 
-        self._previousAct = QtGui.QAction(
+        self._previousAct = QtWidgets.QAction(
             "Pre&vious", self,
             shortcut=QtGui.QKeySequence.PreviousChild,
             statusTip="Move the focus to the previous window",
             triggered=self._mdiArea.activatePreviousSubWindow)
 
-        self._separatorAct = QtGui.QAction(self)
+        self._separatorAct = QtWidgets.QAction(self)
         self._separatorAct.setSeparator(True)
 
-        self._aboutAct = QtGui.QAction(
+        self._aboutAct = QtWidgets.QAction(
             QtGui.QIcon(':/help.png'),
             "&About", self,
             statusTip="Show the application's About box",
             triggered=self.about)
 
-        self._aboutQtAct = QtGui.QAction(
+        self._aboutQtAct = QtWidgets.QAction(
             QtGui.QIcon(':/qt.png'),
             "About &Qt", self,
             statusTip="Show the Qt library's About box",
-            triggered=QtGui.qApp.aboutQt)
+            triggered=QtWidgets.qApp.aboutQt)
 
     def createMenus(self):
         """Create menus."""
@@ -499,8 +499,8 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
         :param int stretch: stretch factor
         :rtype: |QLabel|"""
-        label = QtGui.QLabel()
-        label.setFrameStyle(QtGui.QFrame.Panel | QtGui.QFrame.Sunken)
+        label = QtWidgets.QLabel()
+        label.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Sunken)
         label.setLineWidth(2)
         self.statusBar().addWidget(label, stretch)
         return label
@@ -600,7 +600,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     @QtCore.pyqtSlot()
     def open(self):
         """Handle the open action."""
-        fileDialog = QtGui.QFileDialog(self)
+        fileDialog = QtWidgets.QFileDialog(self)
         settings = QtCore.QSettings()
         fileDialog.setNameFilters(["Image Files (*.jpg *.png *.tif)",
                                    "All Files (*)"])
@@ -608,7 +608,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
             fileDialog.setDirectory(".")
         else:
             self.restoreDialogState(fileDialog, SETTING_FILEOPEN)
-        fileDialog.setFileMode(QtGui.QFileDialog.ExistingFile)
+        fileDialog.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         if not fileDialog.exec_():
             return
         self.saveDialogState(fileDialog, SETTING_FILEOPEN)
@@ -634,12 +634,12 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     @QtCore.pyqtSlot()
     def about(self):
         """Display About dialog box."""
-        QtGui.QMessageBox.about(self, "About MDI",
+        QtWidgets.QMessageBox.about(self, "About MDI",
                 "<b>MDI Image Viewer</b> demonstrates how to"
                 "synchronize the panning and zooming of multiple image"
                 "viewer windows using Qt.")
 
-    @QtCore.pyqtSlot(QtGui.QMdiSubWindow)
+    @QtCore.pyqtSlot(QtWidgets.QMdiSubWindow)
     def subWindowActivated(self, window):
         """Handle |QMdiSubWindow| activated signal.
 
@@ -647,7 +647,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
                                        activated"""
         self.updateStatusBar()
 
-    @QtCore.pyqtSlot(QtGui.QMdiSubWindow)
+    @QtCore.pyqtSlot(QtWidgets.QMdiSubWindow)
     def setActiveSubWindow(self, window):
         """Set active |QMdiSubWindow|.
 
@@ -662,12 +662,12 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
         :param str filename: filename to load"""
         activeMdiChild = self.activeMdiChild
-        QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         pixmap = QtGui.QPixmap(filename)
-        QtGui.QApplication.restoreOverrideCursor()
+        QtWidgets.QApplication.restoreOverrideCursor()
         if (not pixmap or
             pixmap.width()==0 or pixmap.height==0):
-            QtGui.QMessageBox.warning(self, APPNAME,
+            QtWidgets.QMessageBox.warning(self, APPNAME,
                                       "Cannot read file %s." % (filename,))
             self.updateRecentFileSettings(filename, delete=True)
             self.updateRecentFileActions()
@@ -763,9 +763,9 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
     def switchLayoutDirection(self):
         """Switch MDI subwindow layout direction."""
         if self.layoutDirection() == QtCore.Qt.LeftToRight:
-            QtGui.qApp.setLayoutDirection(QtCore.Qt.RightToLeft)
+            QtWidgets.qApp.setLayoutDirection(QtCore.Qt.RightToLeft)
         else:
-            QtGui.qApp.setLayoutDirection(QtCore.Qt.LeftToRight)
+            QtWidgets.qApp.setLayoutDirection(QtCore.Qt.LeftToRight)
 
     def synchPan(self, fromViewer):
         """Synch panning of all subwindowws to the same as *fromViewer*.
@@ -806,7 +806,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
 
         :param |QDialog| dialog: dialog to save state of
         :param str groupName: |QSettings| group name"""
-        assert isinstance(dialog, QtGui.QDialog)
+        assert isinstance(dialog, QtWidgets.QDialog)
 
         settings = QtCore.QSettings()
         settings.beginGroup(groupName)
@@ -821,7 +821,7 @@ class MDIImageViewerWindow(QtGui.QMainWindow):
         """Restore dialog state, position & size.
 
         :param str groupName: |QSettings| group name"""
-        assert isinstance(dialog, QtGui.QDialog)
+        assert isinstance(dialog, QtWidgets.QDialog)
 
         settings = QtCore.QSettings()
         settings.beginGroup(groupName)
@@ -897,7 +897,7 @@ def main():
     """Run MDI Image Viewer application."""
     import sys
 
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     QtCore.QSettings.setDefaultFormat(QtCore.QSettings.IniFormat)
     app.setOrganizationName(COMPANY)
     app.setOrganizationDomain(DOMAIN)
