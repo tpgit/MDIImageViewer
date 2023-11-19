@@ -4,7 +4,7 @@
  MDI Image Viewer sample README
 ================================
 
-See the documentation at: http://tpgit.github.com/MDIImageViewer/.
+See the documentation at: http://tpgit.github.io/MDIImageViewer/.
 
 ..
    Local Variables:
